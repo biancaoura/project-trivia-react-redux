@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { shape } from 'prop-types';
+import md5 from 'crypto-js/md5';
 
 class Header extends Component {
+  hashEmail = (email) => {
+    const hashedEmail = md5(email).toString();
+    return `https://www.gravatar.com/avatar/${hashedEmail}`;
+  };
+
   render() {
-    const { name, gravatarEmail } = this.props;
+    const { name, gravatarEmail: { email } } = this.props;
     return (
 
       <header>
         <img
-          src={ gravatarEmail.email }
+          src={ this.hashEmail(email) }
           alt="imagem do avatar"
           data-testid="header-profile-picture"
         />

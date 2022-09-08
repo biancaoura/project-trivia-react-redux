@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
-import assertions from './assertions';
+import reducerTrivia from './reducerTrivia';
+// import assertions from './assertions';
 import gravatarEmail from './gravatarEmail';
 import name from './name';
-import score from './score';
+// import score from './score';
 
 // {
 //   name: nome-da-pessoa,
@@ -11,6 +12,6 @@ import score from './score';
 //   gravatarEmail: email-da-pessoa,
 // }
 
-const rootReducer = combineReducers({ assertions, gravatarEmail, name, score });
+const rootReducer = combineReducers({ reducerTrivia, name, gravatarEmail });
 
 export default rootReducer;
