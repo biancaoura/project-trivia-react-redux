@@ -11,3 +11,10 @@ export const fetchAPI = (email) => async (dispatch) => {
   const avatar = await gravatarAPI(email);
   dispatch(getAvatar(avatar));
 };
+
+export const AVATAR_NAME = 'AVATAR_NAME';
+
+export const avatarName = (payload) => ({
+  type: AVATAR_NAME,
+  email: `https://www.gravatar.com/avatar/${payload}`,
+});

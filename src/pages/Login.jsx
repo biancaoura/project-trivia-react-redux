@@ -1,7 +1,7 @@
 import { shape, func } from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchAPI, submitName } from '../redux/actions';
+import { avatarName, fetchAPI, submitName } from '../redux/actions';
 
 class Login extends Component {
   constructor() {
@@ -38,10 +38,11 @@ class Login extends Component {
   login = (event) => {
     event.preventDefault();
     const { name, email } = this.state;
-    const { fetchAvatar, history: { push }, dispatchName } = this.props;
+    const { history: { push }, dispatchName, dispatchEmail } = this.props;
 
     dispatchName(name);
-    fetchAvatar(email);
+    dispatchEmail(email);
+    // fetchAvatar(email);
 
     push('/game');
   };
@@ -91,11 +92,12 @@ class Login extends Component {
 const mapDispatchToProps = (dispatch) => ({
   fetchAvatar: (email) => dispatch(fetchAPI(email)),
   dispatchName: (name) => dispatch(submitName(name)),
+  dispatchEmail: (email) => dispatch(avatarName(email)),
 });
 
 Login.propTypes = {
   history: shape().isRequired,
-  fetchAvatar: func.isRequired,
+  // fetchAvatar: func.isRequired,
   dispatchName: func.isRequired,
   // dispatch: func,
 };
