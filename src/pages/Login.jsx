@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { actionApiTrivia } from '../redux/actions';
+import { getApiTriva } from '../data/APITrivia';
 
 class Login extends Component {
   constructor() {
@@ -27,8 +31,12 @@ class Login extends Component {
     }, () => this.enableButton());
   };
 
-  login = (event) => {
+  login = async (event) => {
     event.preventDefault();
+    const { dispatch, history } = this.props;
+    await dispatch(actionApiTrivia());
+    history.push('/game');
+    console.log(getApiTriva());
   };
 
   render() {
@@ -63,4 +71,9 @@ class Login extends Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  history: PropTypes.shape().isRequired,
+};
+
+export default connect()(Login);
