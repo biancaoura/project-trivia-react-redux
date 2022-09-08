@@ -9,7 +9,7 @@ const gravatarEmail = (state = INITIAL_STATE, action) => {
   case GET_AVATAR:
     return {
       ...state,
-      email: action.email,
+      email: action.payload,
     };
   default:
     return state;

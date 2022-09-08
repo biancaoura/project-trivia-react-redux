@@ -9,7 +9,7 @@ const name = (state = INITIAL_STATE, action) => {
   case SUBMIT_NAME:
     return {
       ...state,
-      name: action.name,
+      name: action.payload,
     };
   default:
     return state;
