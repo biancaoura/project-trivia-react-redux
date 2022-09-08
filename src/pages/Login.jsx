@@ -1,5 +1,9 @@
 import { shape } from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { actionApiTrivia } from '../redux/actions';
+import { getApiTriva } from '../data/APITrivia';
 
 class Login extends Component {
   constructor() {
@@ -33,8 +37,11 @@ class Login extends Component {
     push('/settings');
   };
 
-  login = (event) => {
+  login = async (event) => {
     event.preventDefault();
+    const { dispatch, history } = this.props;
+    await dispatch(actionApiTrivia());
+    history.push('/game');
   };
 
   render() {
@@ -80,7 +87,8 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  history: shape().isRequired,
+  dispatch: PropTypes.func.isRequired,
+  history: PropTypes.shape().isRequired,
 };
 
-export default Login;
+export default connect()(Login);
