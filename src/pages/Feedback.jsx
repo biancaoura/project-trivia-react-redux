@@ -19,7 +19,6 @@ class Feedback extends Component {
     const { score, assertions } = this.props;
     return (
       <main>
-
         <p data-testid="feedback-text">{ this.checkAnswer()}</p>
 
         <h1
@@ -39,7 +38,6 @@ class Feedback extends Component {
         >
           Play again
         </button>
-
       </main>
     );
   }
