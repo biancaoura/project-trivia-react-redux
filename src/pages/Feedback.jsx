@@ -1,30 +1,48 @@
-import { number } from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes, { number } from 'prop-types';
 
 class Feedback extends Component {
+
   checkAnswer = () => {
     const { correctAnswers } = this.props;
     const minAnswer = 3;
     if (correctAnswers < minAnswer) return 'Could be better...';
     return 'Well Done!';
   };
-
+  
   render() {
+    const { score, assertions } = this.props;
     return (
       <main>
+      
         <p data-testid="feedback-text">{ this.checkAnswer()}</p>
+      
+        <h1
+          data-testid="feedback-total-score"
+        >
+          {score}
+        </h1>
+        <h3
+          data-testid="feedback-total-question"
+        >
+          {assertions}
+        </h3>
+
       </main>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  correctAnswers: /* estado dos acertos */ state,
-});
-
 Feedback.propTypes = {
-  correctAnswers: number.isRequired,
+  score: number.isRequired,
+  assertions: number.isRequired,
+    correctAnswers: number.isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  ...state,
+    correctAnswers: /* estado dos acertos */ state,
+});
 
 export default connect(mapStateToProps)(Feedback);
