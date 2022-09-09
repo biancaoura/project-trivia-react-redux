@@ -4,9 +4,10 @@ import { func, number, shape } from 'prop-types';
 
 class Feedback extends Component {
   checkAnswer = () => {
-    const { correctAnswers } = this.props;
+    const { score } = this.props;
     const minAnswer = 3;
-    if (correctAnswers < minAnswer) return 'Could be better...';
+
+    if (score < minAnswer) return 'Could be better...';
     return 'Well Done!';
   };
 
@@ -54,7 +55,7 @@ Feedback.propTypes = {
 
 const mapStateToProps = (state) => ({
   ...state,
-  correctAnswers: /* estado dos acertos */ state,
+  // correctAnswers: /* estado dos acertos */ state,
 });
 
 export default connect(mapStateToProps)(Feedback);
