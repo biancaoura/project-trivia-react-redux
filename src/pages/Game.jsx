@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Header from '../components/Header';
 // import { connect } from 'react-redux';
 // import { actionApiTrivia } from '../redux/actions';
 // import getApiTriva from '../data/APITrivia';
@@ -6,7 +7,9 @@ import React, { Component } from 'react';
 class Game extends Component {
   render() {
     return (
-      <div>ola</div>
+      <div>
+        <Header />
+      </div>
     );
   }
 }

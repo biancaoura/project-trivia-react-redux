@@ -1,9 +1,7 @@
-import { shape } from 'prop-types';
+import { shape, func } from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { actionApiTrivia } from '../redux/actions';
-import { getApiTriva } from '../data/APITrivia';
+import { submitEmail, submitName, actionApiTrivia } from '../redux/actions';
 
 class Login extends Component {
   constructor() {
@@ -39,9 +37,14 @@ class Login extends Component {
 
   login = async (event) => {
     event.preventDefault();
-    const { dispatch, history } = this.props;
-    await dispatch(actionApiTrivia());
-    history.push('/game');
+    const { name, email } = this.state;
+    const {
+      history: { push }, dispatchName, dispatchAPItrivia, dispatchEmail } = this.props;
+    dispatchAPItrivia();
+    dispatchName(name);
+    dispatchEmail(email);
+
+    push('/game');
   };
 
   render() {
@@ -86,9 +89,17 @@ class Login extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  dispatchAPItrivia: () => dispatch(actionApiTrivia()),
+  dispatchName: (name) => dispatch(submitName(name)),
+  dispatchEmail: (email) => dispatch(submitEmail(email)),
+});
+
 Login.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  history: PropTypes.shape().isRequired,
+  history: shape().isRequired,
+  dispatchName: func.isRequired,
+  dispatchEmail: func.isRequired,
+  dispatchAPItrivia: func.isRequired,
 };
 
-export default connect()(Login);
+export default connect(null, mapDispatchToProps)(Login);
