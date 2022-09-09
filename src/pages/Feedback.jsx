@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { number } from 'prop-types';
+import { func, number, shape } from 'prop-types';
 
 class Feedback extends Component {
   checkAnswer = () => {
@@ -11,11 +11,15 @@ class Feedback extends Component {
     return 'Well Done!';
   };
 
+  handlePlayAgain = () => {
+    const { history: { push } } = this.props;
+    push('/');
+  };
+
   render() {
     const { score, assertions } = this.props;
     return (
       <main>
-
         <p data-testid="feedback-text">{ this.checkAnswer()}</p>
 
         <h1
@@ -28,7 +32,13 @@ class Feedback extends Component {
         >
           {assertions}
         </h3>
-
+        <button
+          type="button"
+          onChange={ this.handlePlayAgain() }
+          data-testid="btn-play-again"
+        >
+          Play again
+        </button>
       </main>
     );
   }
@@ -37,7 +47,10 @@ class Feedback extends Component {
 Feedback.propTypes = {
   score: number.isRequired,
   assertions: number.isRequired,
-  // correctAnswers: number.isRequired,
+  correctAnswers: number.isRequired,
+  history: shape({
+    push: func.isRequired,
+  }).isRequired,
 };
 
 const mapStateToProps = (state) => ({
