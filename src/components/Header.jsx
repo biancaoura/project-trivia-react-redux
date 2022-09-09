@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { shape } from 'prop-types';
+import { shape, number } from 'prop-types';
 import md5 from 'crypto-js/md5';
 
 class Header extends Component {
@@ -10,7 +10,7 @@ class Header extends Component {
   };
 
   render() {
-    const { name, gravatarEmail: { email } } = this.props;
+    const { name: { name }, gravatarEmail: { email }, score } = this.props;
     return (
 
       <header>
@@ -19,8 +19,8 @@ class Header extends Component {
           alt="imagem do avatar"
           data-testid="header-profile-picture"
         />
-        <h4 data-testid="header-player-name">{name.name}</h4>
-        <p data-testid="header-score">0</p>
+        <h4 data-testid="header-player-name">{ name }</h4>
+        <p data-testid="header-score">{ score }</p>
       </header>
     );
   }
@@ -33,11 +33,13 @@ const mapStateToProps = (state) => ({
 Header.propTypes = {
   name: shape(),
   gravatarEmail: shape(),
+  score: number,
 };
 
 Header.defaultProps = {
   name: '',
   gravatarEmail: '',
+  score: 0,
 };
 
 export default connect(mapStateToProps)(Header);
