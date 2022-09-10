@@ -38,7 +38,6 @@ class Login extends Component {
 
   login = async (event) => {
     event.preventDefault();
-    // const { dispatch, history } = this.props;
     const { name, email } = this.state;
     const {
       history: { push }, dispatchName, dispatchAPITrivia, dispatchEmail, dispatchTrivia,
@@ -49,7 +48,6 @@ class Login extends Component {
     const validAPI = APITrivia.trivia.response_code;
     console.log(validAPI);
     const THREE = 3;
-    // await dispatch(actionApiTrivia(), validAPI);
     await dispatchTrivia();
 
     await dispatchAPITrivia();
