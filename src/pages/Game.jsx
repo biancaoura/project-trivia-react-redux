@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { shape } from 'prop-types';
 import Header from '../components/Header';
 
 class Game extends Component {
@@ -19,7 +19,7 @@ class Game extends Component {
   random = () => {
     const { resultApi } = this.props;
     const { index } = this.state;
-    console.log(resultApi);
+    // console.log(resultApi);
     const questionApi = resultApi[index].incorrect_answers.map((v) => v);
 
     questionApi.push(resultApi[index].correct_answer);
@@ -51,7 +51,7 @@ class Game extends Component {
     const { index, questionApi } = this.state;
     // const questionApi = resultApi[index].incorrect_answers.map((v) => v);
     // questionApi.push(resultApi[index].correct_answer);
-    console.log(questionApi);
+    // console.log(questionApi);
     return (
       <div>
         <Header />
@@ -84,7 +84,6 @@ class Game extends Component {
             )}
 
         </div>
-
       </div>
     );
   }
@@ -92,11 +91,10 @@ class Game extends Component {
 
 const mapStateToProps = (state) => ({
   resultApi: state.reducerTrivia.trivia.results,
-
 });
 
 Game.propTypes = {
-  resultApi: PropTypes.shape().isRequired,
+  resultApi: shape.isRequired,
 };
 
 export default connect(mapStateToProps)(Game);

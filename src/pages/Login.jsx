@@ -1,7 +1,7 @@
-import { shape, func } from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { submitEmail, submitName, actionApiTrivia } from '../redux/actions';
+import { shape, func } from 'prop-types';
+import { submitEmail, submitName, actionApiTrivia, actionTrivia } from '../redux/actions';
 
 class Login extends Component {
   constructor() {
@@ -37,26 +37,30 @@ class Login extends Component {
 
   login = async (event) => {
     event.preventDefault();
-     const { name, email } = this.state;
+    // const { dispatch, history } = this.props;
+    const { name, email } = this.state;
     const {
-      history: { push }, dispatchName, dispatchAPItrivia, dispatchEmail } = this.props;
- 
+      history: { push }, dispatchName, dispatchAPITrivia, dispatchEmail, dispatchTrivia,
+    } = this.props;
 
-    push('/game');
-    const APITrivia = await getApiTriva();
+    // passar isso pra alguma action?
+    // const APITrivia = await getApiTriva();
+    // const validAPI = APITrivia.trivia.response_code;
+
     const THREE = 3;
-    await dispatch(actionApiTrivia());
-     dispatchAPItrivia();
+    // await dispatch(actionApiTrivia(), validAPI);
+    await dispatchTrivia();
+
+    dispatchAPITrivia();
     dispatchName(name);
     dispatchEmail(email);
+
     if (validAPI === THREE) {
-      console.log('oi');
-      history.push('/');
+      push('/');
       localStorage.clear();
     } else {
-      history.push('/game');
+      push('/game');
     }
-    // history.push('/game');
   };
 
   render() {
@@ -102,16 +106,18 @@ class Login extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
+  dispatchTrivia: () => dispatch(actionTrivia()),
   dispatchAPItrivia: () => dispatch(actionApiTrivia()),
   dispatchName: (name) => dispatch(submitName(name)),
   dispatchEmail: (email) => dispatch(submitEmail(email)),
 });
 
 Login.propTypes = {
+  dispatchTrivia: func.isRequired,
   history: shape().isRequired,
   dispatchName: func.isRequired,
   dispatchEmail: func.isRequired,
-  dispatchAPItrivia: func.isRequired,
+  dispatchAPITrivia: func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);
