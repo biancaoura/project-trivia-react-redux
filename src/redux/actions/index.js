@@ -18,9 +18,10 @@ export const gravatarToken = (payload) => ({
 });
 
 export const actionApiTrivia = () => async (dispatch) => {
+
   const APITrivia = await getApiTriva();
-  console.log(APITrivia);
-  dispatch({ type: REQUEST_API, APITrivia: APITrivia.trivia });
+
+  dispatch({ type: REQUEST_API, APITrivia: APITrivia.trivia, validAPI });
   localStorage.setItem('token', APITrivia.token.token);
   dispatch(gravatarToken(APITrivia.token.token));
 };

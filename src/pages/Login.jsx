@@ -37,14 +37,26 @@ class Login extends Component {
 
   login = async (event) => {
     event.preventDefault();
-    const { name, email } = this.state;
+     const { name, email } = this.state;
     const {
       history: { push }, dispatchName, dispatchAPItrivia, dispatchEmail } = this.props;
-    dispatchAPItrivia();
-    dispatchName(name);
-    dispatchEmail(email);
+ 
 
     push('/game');
+    const APITrivia = await getApiTriva();
+    const THREE = 3;
+    await dispatch(actionApiTrivia());
+     dispatchAPItrivia();
+    dispatchName(name);
+    dispatchEmail(email);
+    if (validAPI === THREE) {
+      console.log('oi');
+      history.push('/');
+      localStorage.clear();
+    } else {
+      history.push('/game');
+    }
+    // history.push('/game');
   };
 
   render() {
