@@ -47,7 +47,7 @@ class Feedback extends Component {
 Feedback.propTypes = {
   score: number.isRequired,
   assertions: number.isRequired,
-  correctAnswers: number.isRequired,
+  // correctAnswers: number.isRequired,
   history: shape({
     push: func.isRequired,
   }).isRequired,
