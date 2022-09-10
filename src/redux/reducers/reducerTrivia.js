@@ -9,6 +9,7 @@ const reducerTrivia = (state = INITIAL_STATE, action) => {
   case REQUEST_API: return {
     ...state,
     trivia: action.APITrivia,
+    validAPI: action.validAPI,
   };
 
   default:
