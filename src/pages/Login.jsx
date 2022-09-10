@@ -46,7 +46,7 @@ class Login extends Component {
     // passar isso pra alguma action? não, isso é para validar o if
     const APITrivia = await getApiTriva();
     const validAPI = APITrivia.trivia.response_code;
-    console.log(validAPI);
+    // console.log(validAPI);
     const THREE = 3;
     await dispatchTrivia();
 
