@@ -70,6 +70,14 @@ class Game extends Component {
     return index === correctAnswer ? 'correct' : 'wrong';
   };
 
+  nextQuestion = () => {
+    const { index } = this.state;
+    this.setState({
+      index: index + 1,
+      selectedAnswer: false,
+    });
+  };
+
   render() {
     const { resultApi } = this.props;
 
@@ -108,8 +116,19 @@ class Game extends Component {
                   {v}
                 </button>),
             )}
-
         </div>
+        {
+          selectedAnswer
+          && (
+            <button
+              type="button"
+              data-testid="btn-next"
+              onClick={ this.nextQuestion }
+            >
+              Next
+            </button>
+          )
+        }
       </div>
     );
   }
