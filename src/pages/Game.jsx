@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { shape } from 'prop-types';
 import Header from '../components/Header';
+import '../App.css';
 
 class Game extends Component {
   constructor() {
@@ -9,6 +10,8 @@ class Game extends Component {
     this.state = {
       index: 0,
       questionApi: [],
+      selectedAnswer: false,
+      correctAnswer: '',
     };
   }
 
@@ -22,7 +25,10 @@ class Game extends Component {
     // console.log(resultApi);
     const questionApi = resultApi[index].incorrect_answers.map((v) => v);
 
-    questionApi.push(resultApi[index].correct_answer);
+    const correctAnswer = resultApi[index].correct_answer;
+
+    questionApi.push(correctAnswer);
+    this.setState({ correctAnswer });
 
     let lengthQuestion = questionApi.length;
     let assortedNumber;
@@ -46,12 +52,18 @@ class Game extends Component {
     return v === correctAnswer ? 'correct-answer' : `wrong-answer-${i}`;
   };
 
+  handleClick = () => this.setState({ selectedAnswer: true });
+
+  setColor = (index) => {
+    const { correctAnswer } = this.state;
+    return index === correctAnswer ? 'correct' : 'wrong';
+  };
+
   render() {
     const { resultApi } = this.props;
-    const { index, questionApi } = this.state;
+    const { index, questionApi, selectedAnswer } = this.state;
     // const questionApi = resultApi[index].incorrect_answers.map((v) => v);
     // questionApi.push(resultApi[index].correct_answer);
-    // console.log(questionApi);
     return (
       <div>
         <Header />
@@ -76,7 +88,10 @@ class Game extends Component {
               (v, i) => (
                 <button
                   data-testid={ this.setTestId(v, i) }
+                  id={ this.setTestId(v, i) }
                   key={ i }
+                  onClick={ this.handleClick }
+                  className={ selectedAnswer ? this.setColor(v) : '' }
                   type="button"
                 >
                   {v}
