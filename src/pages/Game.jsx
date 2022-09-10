@@ -57,11 +57,11 @@ class Game extends Component {
   };
 
   timer = () => {
-    // this.intervalId =
     const ONE_SECOND = 1000;
     setInterval(() => {
       this.setState((preventState) => ({ secondTimer: preventState.secondTimer - 1 }));
     }, ONE_SECOND);
+  };
 
   handleClick = () => this.setState({ selectedAnswer: true });
 
@@ -73,7 +73,7 @@ class Game extends Component {
   render() {
     const { resultApi } = this.props;
 
-  const { index, questionApi, selectedAnswer, secondTimer } = this.state;
+    const { index, questionApi, selectedAnswer, secondTimer } = this.state;
     const ONE_LESS = -1;
     console.log(secondTimer);
 
