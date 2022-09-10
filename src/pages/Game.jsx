@@ -10,19 +10,23 @@ class Game extends Component {
     this.state = {
       index: 0,
       questionApi: [],
+
+      secondTimer: 30,
+
       selectedAnswer: false,
       correctAnswer: '',
+
     };
   }
 
   componentDidMount() {
     this.random();
+    this.timer();
   }
 
   random = () => {
     const { resultApi } = this.props;
     const { index } = this.state;
-    // console.log(resultApi);
     const questionApi = resultApi[index].incorrect_answers.map((v) => v);
 
     const correctAnswer = resultApi[index].correct_answer;
@@ -52,6 +56,13 @@ class Game extends Component {
     return v === correctAnswer ? 'correct-answer' : `wrong-answer-${i}`;
   };
 
+  timer = () => {
+    // this.intervalId =
+    const ONE_SECOND = 1000;
+    setInterval(() => {
+      this.setState((preventState) => ({ secondTimer: preventState.secondTimer - 1 }));
+    }, ONE_SECOND);
+
   handleClick = () => this.setState({ selectedAnswer: true });
 
   setColor = (index) => {
@@ -61,9 +72,11 @@ class Game extends Component {
 
   render() {
     const { resultApi } = this.props;
-    const { index, questionApi, selectedAnswer } = this.state;
-    // const questionApi = resultApi[index].incorrect_answers.map((v) => v);
-    // questionApi.push(resultApi[index].correct_answer);
+
+  const { index, questionApi, selectedAnswer, secondTimer } = this.state;
+    const ONE_LESS = -1;
+    console.log(secondTimer);
+
     return (
       <div>
         <Header />
@@ -71,18 +84,15 @@ class Game extends Component {
           {resultApi[index].category}
         </p>
 
+        <div>
+          { secondTimer}
+        </div>
+
         <p data-testid="question-text">
           {resultApi[index].question}
 
         </p>
         <div data-testid="answer-options">
-          {/* <button
-            data-testid="correct-answer"
-            type="button"
-          >
-            {resultApi[index].correct_answer}
-
-          </button> */}
           {questionApi
             .map(
               (v, i) => (
@@ -93,6 +103,7 @@ class Game extends Component {
                   onClick={ this.handleClick }
                   className={ selectedAnswer ? this.setColor(v) : '' }
                   type="button"
+                  disabled={ secondTimer <= ONE_LESS }
                 >
                   {v}
                 </button>),
