@@ -1,7 +1,8 @@
-import { REQUEST_API } from '../actions';
+import { REQUEST_API, GRAVATAR_TOKEN } from '../actions';
 
 const INITIAL_STATE = {
   trivia: {},
+  token: '',
 };
 
 const reducerTrivia = (state = INITIAL_STATE, action) => {
@@ -11,6 +12,11 @@ const reducerTrivia = (state = INITIAL_STATE, action) => {
     trivia: action.APITrivia,
     validAPI: action.validAPI,
   };
+  case GRAVATAR_TOKEN:
+    return {
+      ...state,
+      token: action.payload,
+    };
 
   default:
     return state;

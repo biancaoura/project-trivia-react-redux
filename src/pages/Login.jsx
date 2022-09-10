@@ -1,8 +1,7 @@
+import { shape, func } from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { actionApiTrivia } from '../redux/actions';
-import { getApiTriva } from '../data/APITrivia';
+import { submitEmail, submitName, actionApiTrivia } from '../redux/actions';
 
 class Login extends Component {
   constructor() {
@@ -31,13 +30,25 @@ class Login extends Component {
     }, () => this.enableButton());
   };
 
+  handleClick = () => {
+    const { history: { push } } = this.props;
+    push('/settings');
+  };
+
   login = async (event) => {
     event.preventDefault();
-    const { dispatch, history } = this.props;
+     const { name, email } = this.state;
+    const {
+      history: { push }, dispatchName, dispatchAPItrivia, dispatchEmail } = this.props;
+ 
+
+    push('/game');
     const APITrivia = await getApiTriva();
-    const validAPI = APITrivia.trivia.response_code;
     const THREE = 3;
-    await dispatch(actionApiTrivia(), validAPI);
+    await dispatch(actionApiTrivia());
+     dispatchAPItrivia();
+    dispatchName(name);
+    dispatchEmail(email);
     if (validAPI === THREE) {
       console.log('oi');
       history.push('/');
@@ -51,38 +62,56 @@ class Login extends Component {
   render() {
     const { name, email, isDisabled } = this.state;
     return (
-      <form onSubmit={ this.login }>
-        <input
-          type="text"
-          data-testid="input-player-name"
-          onChange={ this.handleChange }
-          name="name"
-          value={ name }
-          placeholder="Digite seu nome"
-        />
-        <input
-          type="email"
-          data-testid="input-gravatar-email"
-          onChange={ this.handleChange }
-          name="email"
-          value={ email }
-          placeholder="Digite seu email"
-        />
+      <main>
+        <form onSubmit={ this.login }>
+          <input
+            type="text"
+            data-testid="input-player-name"
+            onChange={ this.handleChange }
+            name="name"
+            value={ name }
+            placeholder="Digite seu nome"
+          />
+          <input
+            type="email"
+            data-testid="input-gravatar-email"
+            onChange={ this.handleChange }
+            name="email"
+            value={ email }
+            placeholder="Digite seu email"
+          />
+          <button
+            type="submit"
+            data-testid="btn-play"
+            disabled={ isDisabled }
+          >
+            Play
+          </button>
+        </form>
         <button
-          type="submit"
-          data-testid="btn-play"
-          disabled={ isDisabled }
+          type="button"
+          data-testid="btn-settings"
+          onClick={ this.handleClick }
         >
-          Play
+          Configurações
         </button>
-      </form>
+      </main>
+
     );
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  dispatchAPItrivia: () => dispatch(actionApiTrivia()),
+  dispatchName: (name) => dispatch(submitName(name)),
+  dispatchEmail: (email) => dispatch(submitEmail(email)),
+});
+
 Login.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  history: PropTypes.shape().isRequired,
+  history: shape().isRequired,
+  dispatchName: func.isRequired,
+  dispatchEmail: func.isRequired,
+  dispatchAPItrivia: func.isRequired,
 };
 
-export default connect()(Login);
+export default connect(null, mapDispatchToProps)(Login);

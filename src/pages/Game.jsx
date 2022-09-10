@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Header from '../components/Header';
 
 class Game extends Component {
   constructor() {
@@ -53,6 +54,7 @@ class Game extends Component {
     console.log(questionApi);
     return (
       <div>
+        <Header />
         <p data-testid="question-category">
           {resultApi[index].category}
         </p>
@@ -82,6 +84,7 @@ class Game extends Component {
             )}
 
         </div>
+
       </div>
     );
   }
