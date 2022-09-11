@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { shape } from 'prop-types';
+import { func, shape } from 'prop-types';
 import Header from '../components/Header';
+import { actionScorePlayer } from '../redux/actions';
 import '../App.css';
 
 class Game extends Component {
@@ -15,7 +16,7 @@ class Game extends Component {
 
       selectedAnswer: false,
       correctAnswer: '',
-
+      scorePlayer: 0,
     };
   }
 
@@ -63,19 +64,42 @@ class Game extends Component {
     }, ONE_SECOND);
   };
 
-  handleClick = () => this.setState({ selectedAnswer: true });
-
   setColor = (index) => {
     const { correctAnswer } = this.state;
     return index === correctAnswer ? 'correct' : 'wrong';
   };
 
+  handleClick = (test) => {
+    this.setState({ selectedAnswer: true });
+    const { secondTimer, index } = this.state;
+    const { resultApi, dispatch } = this.props;
+
+    const THREE = 3;
+    const TEN = 10;
+
+    let difficulty = 0;
+    if (resultApi[index].difficulty === 'easy') {
+      difficulty += 1;
+    } else if (resultApi[index].difficulty === 'medium') {
+      difficulty += 2;
+    } else {
+      difficulty += THREE;
+    }
+    console.log(difficulty);
+    let scores = 0;
+    if (test === 'correct') {
+      (scores += TEN + (secondTimer * difficulty));
+    }
+    this.setState((preventState) => ({ scorePlayer: preventState.scorePlayer + scores }));
+    dispatch(actionScorePlayer(scores));
+  };
+
   render() {
     const { resultApi } = this.props;
+    const { index, questionApi, selectedAnswer, secondTimer, scorePlayer } = this.state;
 
-    const { index, questionApi, selectedAnswer, secondTimer } = this.state;
     const ONE_LESS = -1;
-    console.log(secondTimer);
+    // console.log(secondTimer);
 
     return (
       <div>
@@ -86,6 +110,10 @@ class Game extends Component {
 
         <div>
           { secondTimer}
+        </div>
+
+        <div>
+          { scorePlayer}
         </div>
 
         <p data-testid="question-text">
@@ -100,8 +128,8 @@ class Game extends Component {
                   data-testid={ this.setTestId(v, i) }
                   id={ this.setTestId(v, i) }
                   key={ i }
-                  onClick={ this.handleClick }
                   className={ selectedAnswer ? this.setColor(v) : '' }
+                  onClick={ (e) => this.handleClick(this.setColor(v), e) }
                   type="button"
                   disabled={ secondTimer <= ONE_LESS }
                 >
@@ -121,6 +149,7 @@ const mapStateToProps = (state) => ({
 
 Game.propTypes = {
   resultApi: shape.isRequired,
+  dispatch: func.isRequired,
 };
 
 export default connect(mapStateToProps)(Game);
