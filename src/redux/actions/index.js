@@ -1,6 +1,5 @@
-import { getApiTriva } from '../../data/APITrivia';
+import { getApiTrivia } from '../../data/APITrivia';
 
-// export const GET_AVATAR = 'GET_AVATAR';
 export const SUBMIT_NAME = 'SUBMIT_NAME';
 export const GRAVATAR_TOKEN = 'GRAVATAR_TOKEN';
 export const SUBMIT_EMAIL = 'SUBMIT_EMAIL';
@@ -20,7 +19,7 @@ export const gravatarToken = (payload) => ({
 });
 
 export const actionApiTrivia = () => async (dispatch) => {
-  const APITrivia = await getApiTriva();
+  const APITrivia = await getApiTrivia();
 
   dispatch({ type: REQUEST_API, APITrivia: APITrivia.trivia });
   localStorage.setItem('token', APITrivia.token.token);
@@ -28,14 +27,10 @@ export const actionApiTrivia = () => async (dispatch) => {
 };
 
 export const actionTrivia = () => async (dispatch) => {
-  const APITrivia = await getApiTriva();
+  const APITrivia = await getApiTrivia();
   const validAPI = APITrivia.trivia.response_code;
 
   dispatch({ type: GET_TRIVIA, trivia: validAPI });
 };
 
-export const actionScorePlayer = (player) => {
-  console.log(player);
-  return { type: SCORE_PLAYER,
-    player };
-};
+export const actionScorePlayer = (player) => ({ type: SCORE_PLAYER, player });

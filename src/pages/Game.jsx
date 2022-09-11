@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { func, shape } from 'prop-types';
+import { arrayOf, func, shape } from 'prop-types';
 import Header from '../components/Header';
 import { actionScorePlayer } from '../redux/actions';
 import '../App.css';
@@ -10,10 +10,8 @@ class Game extends Component {
     super();
     this.state = {
       index: 0,
-      questionApi: [],
-
+      allAnswers: [],
       secondTimer: 30,
-
       selectedAnswer: false,
       correctAnswer: '',
       scorePlayer: 0,
@@ -21,31 +19,32 @@ class Game extends Component {
   }
 
   componentDidMount() {
-    this.random();
-    this.timer();
+    this.shuffleAnswers();
+    this.setTimer();
   }
 
-  random = () => {
+  shuffleAnswers = () => {
     const { resultApi } = this.props;
     const { index } = this.state;
-    const questionApi = resultApi[index].incorrect_answers.map((v) => v);
 
+    const wrongAnswers = resultApi[index].incorrect_answers.map((v) => v);
     const correctAnswer = resultApi[index].correct_answer;
 
-    questionApi.push(correctAnswer);
+    const allAnswers = [...wrongAnswers, correctAnswer];
+
     this.setState({ correctAnswer });
 
-    let lengthQuestion = questionApi.length;
-    let assortedNumber;
+    let answersLength = allAnswers.length;
+    let randomNum;
 
-    while (lengthQuestion !== 0) {
-      assortedNumber = Math.floor(Math.random() * lengthQuestion);
-      lengthQuestion -= 1;
+    while (answersLength !== 0) {
+      randomNum = Math.floor(Math.random() * answersLength);
+      answersLength -= 1;
 
-      [questionApi[lengthQuestion], questionApi[assortedNumber]] = [
-        questionApi[assortedNumber], questionApi[lengthQuestion]];
+      [allAnswers[answersLength], allAnswers[randomNum]] = [
+        allAnswers[randomNum], allAnswers[answersLength]];
 
-      this.setState({ questionApi });
+      this.setState({ allAnswers });
     }
   };
 
@@ -57,7 +56,7 @@ class Game extends Component {
     return v === correctAnswer ? 'correct-answer' : `wrong-answer-${i}`;
   };
 
-  timer = () => {
+  setTimer = () => {
     const ONE_SECOND = 1000;
     setInterval(() => {
       this.setState((preventState) => ({ secondTimer: preventState.secondTimer - 1 }));
@@ -69,7 +68,7 @@ class Game extends Component {
     return index === correctAnswer ? 'correct' : 'wrong';
   };
 
-  handleClick = (test) => {
+  handleClick = (className) => {
     this.setState({ selectedAnswer: true });
     const { secondTimer, index } = this.state;
     const { resultApi, dispatch } = this.props;
@@ -87,10 +86,10 @@ class Game extends Component {
     }
     console.log(difficulty);
     let scores = 0;
-    if (test === 'correct') {
+    if (className === 'correct') {
       (scores += TEN + (secondTimer * difficulty));
     }
-    this.setState((preventState) => ({ scorePlayer: preventState.scorePlayer + scores }));
+    this.setState((prevState) => ({ scorePlayer: prevState.scorePlayer + scores }));
     dispatch(actionScorePlayer(scores));
   };
 
@@ -104,9 +103,9 @@ class Game extends Component {
 
   render() {
     const { resultApi } = this.props;
-    const { index, questionApi, selectedAnswer, secondTimer, scorePlayer } = this.state;
+    const { index, allAnswers, selectedAnswer, secondTimer, scorePlayer } = this.state;
 
-    const ONE_LESS = -1;
+    const MINUS_ONE = -1;
 
     return (
       <div>
@@ -128,17 +127,16 @@ class Game extends Component {
 
         </p>
         <div data-testid="answer-options">
-          {questionApi
+          {allAnswers
             .map(
               (v, i) => (
                 <button
                   data-testid={ this.setTestId(v, i) }
-                  id={ this.setTestId(v, i) }
                   key={ i }
-                  className={ selectedAnswer ? this.setColor(v) : '' }
+                  className={ selectedAnswer && this.setColor(v) }
                   onClick={ (e) => this.handleClick(this.setColor(v), e) }
                   type="button"
-                  disabled={ secondTimer <= ONE_LESS }
+                  disabled={ secondTimer <= MINUS_ONE }
                 >
                   {v}
                 </button>),
@@ -161,12 +159,12 @@ class Game extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  resultApi: state.reducerTrivia.trivia.results,
+const mapStateToProps = ({ reducerTrivia: { trivia: { results } } }) => ({
+  resultApi: results,
 });
 
 Game.propTypes = {
-  resultApi: shape.isRequired,
+  resultApi: arrayOf(shape()).isRequired,
   dispatch: func.isRequired,
 };
 
