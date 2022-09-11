@@ -10,7 +10,7 @@ const player = (state = INITIAL_STATE, action) => {
   case SCORE_PLAYER:
     return {
       ...state,
-      player: action.score + state.score,
+      score: action.score + state.score,
     };
   case CORRECT_ANSWER:
     return {
