@@ -4,10 +4,10 @@ import { func, number, shape } from 'prop-types';
 
 class Feedback extends Component {
   checkAnswer = () => {
-    const { score } = this.props;
+    const { correctAnswers } = this.props;
     const minAnswer = 3;
 
-    if (score < minAnswer) return 'Could be better...';
+    if (correctAnswers < minAnswer) return 'Could be better...';
     return 'Well Done!';
   };
 
@@ -47,7 +47,7 @@ class Feedback extends Component {
 Feedback.propTypes = {
   score: number.isRequired,
   assertions: number.isRequired,
-  // correctAnswers: number.isRequired,
+  correctAnswers: number.isRequired,
   history: shape({
     push: func.isRequired,
   }).isRequired,
@@ -55,7 +55,7 @@ Feedback.propTypes = {
 
 const mapStateToProps = (state) => ({
   ...state,
-  // correctAnswers: /* estado dos acertos */ state,
+  correctAnswers: /* estado dos acertos */ state,
 });
 
 export default connect(mapStateToProps)(Feedback);

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { arrayOf, func, shape } from 'prop-types';
 import Header from '../components/Header';
-import { actionScorePlayer } from '../redux/actions';
+import { actionScorePlayer, increaseCorrect } from '../redux/actions';
 import '../App.css';
 
 class Game extends Component {
@@ -95,11 +95,16 @@ class Game extends Component {
     const difficulty = this.setDifficulty();
 
     let scores = 0;
+    let correctAnswers = 0;
+
     if (className === 'correct') {
       (scores += TEN + (secondTimer * difficulty));
+      correctAnswers += 1;
     }
+
     this.setState((prevState) => ({ scorePlayer: prevState.scorePlayer + scores }));
     dispatch(actionScorePlayer(scores));
+    dispatch(increaseCorrect(correctAnswers));
   };
 
   handleClick = (className) => {
