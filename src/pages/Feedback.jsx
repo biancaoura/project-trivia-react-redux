@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { func, number, shape } from 'prop-types';
+import { number } from 'prop-types';
 
 class Feedback extends Component {
+  checkAnswer = () => {
+    const { correctAnswers } = this.props;
+    const minAnswer = 3;
 
-  // checkAnswer = () => {
-  //   const { score } = this.props;
-  //   const minAnswer = 3;
-
-  //   if (score < minAnswer) return 'Could be better...';
-  //   return 'Well Done!';
-  // };
-
-  
+    if (correctAnswers < minAnswer) return 'Could be better...';
+    return 'Well Done!';
+  };
 
   // handlePlayAgain = () => {
   //   const { history: { push } } = this.props;
@@ -21,13 +19,11 @@ class Feedback extends Component {
 
   render() {
     // const { score, assertions } = this.props;
-    console.log('fed');
     return (
       <main>
-        <h1> binooo </h1>
-        {/* <p data-testid="feedback-text">{ this.checkAnswer()}</p>
+        <p data-testid="feedback-text">{ this.checkAnswer()}</p>
 
-        <h1
+        {/* <h1
           data-testid="feedback-total-score"
         >
           {score}
@@ -49,21 +45,18 @@ class Feedback extends Component {
   }
 }
 
-
-// Feedback.propTypes = {
+Feedback.propTypes = {
 //   score: number.isRequired,
 //   assertions: number.isRequired,
-//   // correctAnswers: number.isRequired,
+  correctAnswers: number.isRequired,
 //   history: shape({
 //     push: func.isRequired,
 //   }).isRequired,
-// };
+};
 
-// const mapStateToProps = (state) => ({
-//   ...state,
-//   // correctAnswers: /* estado dos acertos */ state,
-// });
+const mapStateToProps = (state) => ({
+  ...state,
+  correctAnswers: state.player.correctAnswers,
+});
 
-export default connect()(Feedback);
-
-
+export default connect(mapStateToProps)(Feedback);

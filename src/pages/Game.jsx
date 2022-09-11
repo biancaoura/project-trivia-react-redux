@@ -36,7 +36,6 @@ class Game extends Component {
     const correctAnswer = resultApi[index].correct_answer;
 
     const allAnswers = [...wrongAnswers, correctAnswer];
-    console.log(resultApi);
 
     this.setState({ correctAnswer });
 
@@ -49,7 +48,6 @@ class Game extends Component {
 
       [allAnswers[answersLength], allAnswers[randomNum]] = [
         allAnswers[randomNum], allAnswers[answersLength]];
-      console.log(allAnswers);
       this.setState({ allAnswers });
     }
   };
