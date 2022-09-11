@@ -1,61 +1,69 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { func, number, shape } from 'prop-types';
+// import { func, number, shape } from 'prop-types';
 
 class Feedback extends Component {
-  checkAnswer = () => {
-    const { correctAnswers } = this.props;
-    const minAnswer = 3;
 
-    if (correctAnswers < minAnswer) return 'Could be better...';
-    return 'Well Done!';
-  };
+  // checkAnswer = () => {
+  //   const { score } = this.props;
+  //   const minAnswer = 3;
 
-  handlePlayAgain = () => {
-    const { history: { push } } = this.props;
-    push('/');
-  };
+  //   if (score < minAnswer) return 'Could be better...';
+  //   return 'Well Done!';
+  // };
+
+  
+
+  // handlePlayAgain = () => {
+  //   const { history: { push } } = this.props;
+  //   push('/');
+  // };
 
   render() {
-    const { score, assertions } = this.props;
+    // const { score, assertions } = this.props;
+    console.log('fed');
     return (
       <main>
-        <p data-testid="feedback-text">{ this.checkAnswer()}</p>
+        <h1> binooo </h1>
+        {/* <p data-testid="feedback-text">{ this.checkAnswer()}</p>
 
         <h1
           data-testid="feedback-total-score"
         >
           {score}
-        </h1>
-        <h3
+        </h1> */}
+        {/* <h3
           data-testid="feedback-total-question"
         >
           {assertions}
         </h3>
         <button
           type="button"
-          onChange={ this.handlePlayAgain() }
+          onClick={ this.handlePlayAgain() }
           data-testid="btn-play-again"
         >
           Play again
-        </button>
+        </button> */}
       </main>
     );
   }
 }
 
-Feedback.propTypes = {
-  score: number.isRequired,
-  assertions: number.isRequired,
-  correctAnswers: number.isRequired,
-  history: shape({
-    push: func.isRequired,
-  }).isRequired,
-};
 
-const mapStateToProps = (state) => ({
-  ...state,
-  correctAnswers: /* estado dos acertos */ state,
-});
+// Feedback.propTypes = {
+//   score: number.isRequired,
+//   assertions: number.isRequired,
+//   // correctAnswers: number.isRequired,
+//   history: shape({
+//     push: func.isRequired,
+//   }).isRequired,
+// };
 
-export default connect(mapStateToProps)(Feedback);
+// const mapStateToProps = (state) => ({
+//   ...state,
+//   // correctAnswers: /* estado dos acertos */ state,
+// });
+
+export default connect()(Feedback);
+
+
