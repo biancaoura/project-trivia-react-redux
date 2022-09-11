@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { shape, func } from 'prop-types';
 import { submitEmail, submitName, actionApiTrivia, actionTrivia } from '../redux/actions';
-import { getApiTriva } from '../data/APITrivia';
+import { getApiTrivia } from '../data/APITrivia';
 
 class Login extends Component {
   constructor() {
@@ -19,6 +19,7 @@ class Login extends Component {
     const validName = name.length > 0;
     const validEmail = email.length > 0;
     const validForm = validName && validEmail;
+
     this.setState({
       isDisabled: !validForm,
     });
@@ -43,14 +44,14 @@ class Login extends Component {
       history: { push }, dispatchName, dispatchAPITrivia, dispatchEmail, dispatchTrivia,
     } = this.props;
 
-    // passar isso pra alguma action? não, isso é para validar o if
-    const APITrivia = await getApiTriva();
+    const APITrivia = await getApiTrivia();
     const validAPI = APITrivia.trivia.response_code;
-    console.log(APITrivia);
-    const THREE = 3;
-    await dispatchTrivia();
 
+    const THREE = 3;
+
+    await dispatchTrivia();
     await dispatchAPITrivia();
+
     dispatchName(name);
     dispatchEmail(email);
 
