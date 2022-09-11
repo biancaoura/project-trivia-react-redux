@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 // import { func, number, shape } from 'prop-types';
 
 class Feedback extends Component {
+
   // checkAnswer = () => {
   //   const { score } = this.props;
   //   const minAnswer = 3;
@@ -10,6 +11,8 @@ class Feedback extends Component {
   //   if (score < minAnswer) return 'Could be better...';
   //   return 'Well Done!';
   // };
+
+  
 
   // handlePlayAgain = () => {
   //   const { history: { push } } = this.props;
@@ -46,6 +49,7 @@ class Feedback extends Component {
   }
 }
 
+
 // Feedback.propTypes = {
 //   score: number.isRequired,
 //   assertions: number.isRequired,
@@ -61,3 +65,5 @@ class Feedback extends Component {
 // });
 
 export default connect()(Feedback);
+
+
