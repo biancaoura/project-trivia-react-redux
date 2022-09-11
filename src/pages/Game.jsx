@@ -99,16 +99,16 @@ class Game extends Component {
     const difficulty = this.setDifficulty();
 
     let scores = 0;
-    let correctAnswers = 0;
+    let assertions = 0;
 
     if (className === 'correct') {
       (scores += TEN + (secondTimer * difficulty));
-      correctAnswers += 1;
+      assertions += 1;
     }
 
     this.setState((prevState) => ({ scorePlayer: prevState.scorePlayer + scores }));
     dispatch(actionScorePlayer(scores));
-    dispatch(increaseCorrect(correctAnswers));
+    dispatch(increaseCorrect(assertions));
   };
 
   handleClick = (className) => {
