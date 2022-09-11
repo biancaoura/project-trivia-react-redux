@@ -23,14 +23,20 @@ class Game extends Component {
     this.setTimer();
   }
 
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevState.secondTimer === 0) {
+  //     this.setState({ secondTimer: 30 });
+  //   }
+  // }
+
   shuffleAnswers = () => {
     const { resultApi } = this.props;
     const { index } = this.state;
-
     const wrongAnswers = resultApi[index].incorrect_answers.map((v) => v);
     const correctAnswer = resultApi[index].correct_answer;
 
     const allAnswers = [...wrongAnswers, correctAnswer];
+    console.log(resultApi);
 
     this.setState({ correctAnswer });
 
@@ -43,7 +49,7 @@ class Game extends Component {
 
       [allAnswers[answersLength], allAnswers[randomNum]] = [
         allAnswers[randomNum], allAnswers[answersLength]];
-
+      console.log(allAnswers);
       this.setState({ allAnswers });
     }
   };
@@ -109,18 +115,24 @@ class Game extends Component {
 
   nextQuestion = () => {
     const { index } = this.state;
+    const { history } = this.props;
+    const FOUR = 4;
     this.setState({
       index: index + 1,
       selectedAnswer: false,
-    });
+      secondTimer: 30,
+    }, () => this.shuffleAnswers());
+    // this.shuffleAnswers();
+    if (index === FOUR) {
+      history.push('/feedback');
+    }
   };
 
   render() {
     const { resultApi } = this.props;
     const { index, allAnswers, selectedAnswer, secondTimer, scorePlayer } = this.state;
 
-    const MINUS_ONE = -1;
-
+    // const MINUS_ONE = 0;
     return (
       <div>
         <Header />
@@ -148,9 +160,9 @@ class Game extends Component {
                   data-testid={ this.setTestId(v, i) }
                   key={ i }
                   className={ selectedAnswer ? this.setColor(v) : undefined }
-                  onClick={ (e) => this.handleClick(this.setColor(v), e) }
+                  onClick={ () => this.handleClick(this.setColor(v)) }
                   type="button"
-                  disabled={ secondTimer <= MINUS_ONE }
+                  disabled={ secondTimer <= 0 }
                 >
                   {v}
                 </button>),
@@ -180,6 +192,7 @@ const mapStateToProps = ({ reducerTrivia: { trivia: { results } } }) => ({
 Game.propTypes = {
   resultApi: arrayOf(shape()).isRequired,
   dispatch: func.isRequired,
+  history: shape().isRequired,
 };
 
 export default connect(mapStateToProps)(Game);
