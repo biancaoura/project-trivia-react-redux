@@ -69,7 +69,6 @@ class Game extends Component {
     return index === correctAnswer ? 'correct' : 'wrong';
   };
 
-
   handleClick = (test) => {
     this.setState({ selectedAnswer: true });
     const { secondTimer, index } = this.state;
@@ -93,6 +92,7 @@ class Game extends Component {
     }
     this.setState((preventState) => ({ scorePlayer: preventState.scorePlayer + scores }));
     dispatch(actionScorePlayer(scores));
+  };
 
   nextQuestion = () => {
     const { index } = this.state;
@@ -100,7 +100,6 @@ class Game extends Component {
       index: index + 1,
       selectedAnswer: false,
     });
-
   };
 
   render() {
@@ -108,7 +107,6 @@ class Game extends Component {
     const { index, questionApi, selectedAnswer, secondTimer, scorePlayer } = this.state;
 
     const ONE_LESS = -1;
-    // console.log(secondTimer);
 
     return (
       <div>
