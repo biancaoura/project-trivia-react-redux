@@ -12,9 +12,11 @@ class Feedback extends Component {
     return 'Well Done!';
   };
 
-  handlePlayAgain = () => {
+  handleClick = (e) => {
     const { history: { push } } = this.props;
-    push('/');
+
+    if (e.target.id === 'play-again') push('/');
+    else push('/ranking');
   };
 
   render() {
@@ -32,14 +34,23 @@ class Feedback extends Component {
         <h3
           data-testid="feedback-total-question"
         >
-          { assertions === 0 ? 0 : assertions }
+          { assertions }
         </h3>
         <button
           type="button"
-          onClick={ this.handlePlayAgain }
+          id="play-again"
+          onClick={ (e) => this.handleClick(e) }
           data-testid="btn-play-again"
         >
           Play again
+        </button>
+        <button
+          type="button"
+          id="ranking"
+          onClick={ (e) => this.handleClick(e) }
+          data-testid="btn-ranking"
+        >
+          Ranking
         </button>
       </main>
     );
