@@ -3,7 +3,7 @@ import reducerTrivia from './reducerTrivia';
 // import assertions from './assertions';
 import gravatarEmail from './gravatarEmail';
 import name from './name';
-// import score from './score';
+import player from './score';
 
 // {
 //   name: nome-da-pessoa,
@@ -12,6 +12,6 @@ import name from './name';
 //   gravatarEmail: email-da-pessoa,
 // }
 
-const rootReducer = combineReducers({ reducerTrivia, name, gravatarEmail });
+const rootReducer = combineReducers({ reducerTrivia, name, gravatarEmail, player });
 
 export default rootReducer;
