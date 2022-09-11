@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { func, number, shape } from 'prop-types';
-import { number } from 'prop-types';
+import { func, number, shape } from 'prop-types';
+import Header from '../components/Header';
 
 class Feedback extends Component {
   checkAnswer = () => {
@@ -12,16 +12,17 @@ class Feedback extends Component {
     return 'Well Done!';
   };
 
-  // handlePlayAgain = () => {
-  //   const { history: { push } } = this.props;
-  //   push('/');
-  // };
+  handlePlayAgain = () => {
+    const { history: { push } } = this.props;
+    push('/');
+  };
 
   render() {
     // const { score, assertions } = this.props;
     return (
       <main>
         <p data-testid="feedback-text">{ this.checkAnswer()}</p>
+        <Header />
 
         {/* <h1
           data-testid="feedback-total-score"
@@ -32,14 +33,14 @@ class Feedback extends Component {
           data-testid="feedback-total-question"
         >
           {assertions}
-        </h3>
+        </h3> */}
         <button
           type="button"
-          onClick={ this.handlePlayAgain() }
+          onClick={ this.handlePlayAgain }
           data-testid="btn-play-again"
         >
           Play again
-        </button> */}
+        </button>
       </main>
     );
   }
@@ -49,9 +50,9 @@ Feedback.propTypes = {
 //   score: number.isRequired,
 //   assertions: number.isRequired,
   correctAnswers: number.isRequired,
-//   history: shape({
-//     push: func.isRequired,
-//   }).isRequired,
+  history: shape({
+    push: func.isRequired,
+  }).isRequired,
 };
 
 const mapStateToProps = (state) => ({
