@@ -68,13 +68,12 @@ class Game extends Component {
     return index === correctAnswer ? 'correct' : 'wrong';
   };
 
-  handleClick = (className) => {
-    this.setState({ selectedAnswer: true });
-    const { secondTimer, index } = this.state;
-    const { resultApi, dispatch } = this.props;
+  toggleSelected = () => this.setState({ selectedAnswer: true });
 
+  setDifficulty = () => {
+    const { index } = this.state;
+    const { resultApi } = this.props;
     const THREE = 3;
-    const TEN = 10;
 
     let difficulty = 0;
     if (resultApi[index].difficulty === 'easy') {
@@ -84,13 +83,28 @@ class Game extends Component {
     } else {
       difficulty += THREE;
     }
-    console.log(difficulty);
+
+    return difficulty;
+  };
+
+  setScore = (className) => {
+    const { secondTimer } = this.state;
+    const { dispatch } = this.props;
+
+    const TEN = 10;
+    const difficulty = this.setDifficulty();
+
     let scores = 0;
     if (className === 'correct') {
       (scores += TEN + (secondTimer * difficulty));
     }
     this.setState((prevState) => ({ scorePlayer: prevState.scorePlayer + scores }));
     dispatch(actionScorePlayer(scores));
+  };
+
+  handleClick = (className) => {
+    this.toggleSelected();
+    this.setScore(className);
   };
 
   nextQuestion = () => {
@@ -133,7 +147,7 @@ class Game extends Component {
                 <button
                   data-testid={ this.setTestId(v, i) }
                   key={ i }
-                  className={ selectedAnswer && this.setColor(v) }
+                  className={ selectedAnswer ? this.setColor(v) : undefined }
                   onClick={ (e) => this.handleClick(this.setColor(v), e) }
                   type="button"
                   disabled={ secondTimer <= MINUS_ONE }
