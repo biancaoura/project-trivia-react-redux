@@ -6,6 +6,7 @@ export const SUBMIT_EMAIL = 'SUBMIT_EMAIL';
 export const REQUEST_API = 'REQUEST_API';
 export const GET_TRIVIA = 'GET_TRIVIA';
 export const SCORE_PLAYER = 'SCORE_PLAYER';
+export const CORRECT_ANSWER = 'CORRECT_ANSWER';
 
 export const submitName = (payload) => ({ type: SUBMIT_NAME, payload });
 export const submitEmail = (payload) => ({ type: SUBMIT_EMAIL, payload });
@@ -33,4 +34,5 @@ export const actionTrivia = () => async (dispatch) => {
   dispatch({ type: GET_TRIVIA, trivia: validAPI });
 };
 
-export const actionScorePlayer = (player) => ({ type: SCORE_PLAYER, player });
+export const actionScorePlayer = (score) => ({ type: SCORE_PLAYER, score });
+export const increaseCorrect = (score) => ({ type: CORRECT_ANSWER, score });
