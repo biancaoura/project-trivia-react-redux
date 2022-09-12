@@ -1,6 +1,6 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { cleanup, screen } from '@testing-library/react';
+import { cleanup, screen, waitFor } from '@testing-library/react';
 import App from '../App';
 import renderWithRouterAndredux from './helpers/renderWithRouterAndRedux';
 
@@ -35,7 +35,7 @@ describe('Testando o componente <Login.jsx />', () => {
     expect(inputEmail).toBeDefined();
   });
 
-  test('5- testa se a página contém um botão de "Configurações" e se, ao clicar'
+  test('5- Testa se a página contém um botão de "Configurações" e se, ao clicar'
   + 'nele, ocorre o redirecionamento para a página "Configurações"', () => {
     const { history } = renderWithRouterAndredux(<App />);
 
@@ -52,8 +52,8 @@ describe('Testando o componente <Login.jsx />', () => {
     expect(loginButton.disabled).toBeTruthy();
   });
 
-  test('7- Testa se nome e email preenchidos corretamente, o botão "Play" desabilita e'
-+ 'se clicado, redicreciona a página para a página do jogo "<Game />"', () => {
+  test('7- Testa se nome e email preenchidos corretamente, o botão "Play" habilita e'
++ 'se clicado, redireciona a página para a página do jogo "<Game />"', () => {
   const { history } = renderWithRouterAndredux(<App />);
 
   const inputName = screen.getByTestId('input-player-name');
@@ -62,9 +62,11 @@ describe('Testando o componente <Login.jsx />', () => {
 
   userEvent.type(inputName, 'nome');
   userEvent.type(inputEmail, 'email@email.com');
-
+  
   expect(loginButton.disabled).toBeFalsy();
+  
   userEvent.click(loginButton);
-  expect(history.location.pathname).toBe('/game');
+  const { pathname } = history.location;
+  setTimeout(() => {expect(pathname).toBe('/game');}, 1000) 
   });
 });
