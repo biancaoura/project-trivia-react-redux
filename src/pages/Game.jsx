@@ -143,12 +143,12 @@ class Game extends Component {
           {resultApi[index].category}
         </p>
 
-        <div>
-          { secondTimer}
+        <div data-testid="timer">
+          { secondTimer }
         </div>
 
-        <div>
-          { scorePlayer}
+        <div data-testid="score">
+          { scorePlayer }
         </div>
 
         <p data-testid="question-text">
