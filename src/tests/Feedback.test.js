@@ -1,9 +1,9 @@
 import React from "react";
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 import App from '../App';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from "@testing-library/user-event";
-import Feedback from '../pages/Feedback';
+
 
 describe('Testa a página de feedback', () => {
   test('Testa se todos os itens estão na tela', () => {
@@ -59,7 +59,7 @@ describe('Testa a página de feedback', () => {
 
   test('Testa se a mensagem "Could be better" é mostrada caso o número de acerto seja menor que 3', () => {
     const { history } = renderWithRouterAndRedux(<App />, {
-      player: { assertions: 0 },
+      player: { score: 0, assertions: 0 },
     });
     history.push('/feedback');
 
@@ -68,7 +68,7 @@ describe('Testa a página de feedback', () => {
 
   test('Testa se a mensagem "Well Done!" é mostrada caso o número de acerto seja maior ou igual a 3', () => {
     const { history } = renderWithRouterAndRedux(<App />, {
-      player: { assertions: 3 },
+      player: { score: 0, assertions: 3 },
     });
     history.push('/feedback');
 
