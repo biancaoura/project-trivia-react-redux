@@ -1,43 +1,56 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { func, number, shape } from 'prop-types';
+import Header from '../components/Header';
 
 class Feedback extends Component {
   checkAnswer = () => {
-    const { score } = this.props;
+    const { assertions } = this.props;
     const minAnswer = 3;
 
-    if (score < minAnswer) return 'Could be better...';
+    if (assertions < minAnswer) return 'Could be better...';
     return 'Well Done!';
   };
 
-  handlePlayAgain = () => {
+  handleClick = (e) => {
     const { history: { push } } = this.props;
-    push('/');
+
+    if (e.target.id === 'play-again') push('/');
+    else push('/ranking');
   };
 
   render() {
     const { score, assertions } = this.props;
     return (
       <main>
+        <Header />
         <p data-testid="feedback-text">{ this.checkAnswer()}</p>
 
         <h1
           data-testid="feedback-total-score"
         >
-          {score}
+          { score }
         </h1>
         <h3
           data-testid="feedback-total-question"
         >
-          {assertions}
+          { assertions }
         </h3>
         <button
           type="button"
-          onChange={ this.handlePlayAgain() }
+          id="play-again"
+          onClick={ (e) => this.handleClick(e) }
           data-testid="btn-play-again"
         >
           Play again
+        </button>
+        <button
+          type="button"
+          id="ranking"
+          onClick={ (e) => this.handleClick(e) }
+          data-testid="btn-ranking"
+        >
+          Ranking
         </button>
       </main>
     );
@@ -47,15 +60,14 @@ class Feedback extends Component {
 Feedback.propTypes = {
   score: number.isRequired,
   assertions: number.isRequired,
-  correctAnswers: number.isRequired,
   history: shape({
     push: func.isRequired,
   }).isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  ...state,
-  // correctAnswers: /* estado dos acertos */ state,
+  assertions: state.player.assertions,
+  score: state.player.score,
 });
 
 export default connect(mapStateToProps)(Feedback);
