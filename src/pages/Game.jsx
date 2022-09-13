@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { arrayOf, func, shape } from 'prop-types';
+import md5 from 'crypto-js/md5';
 import Header from '../components/Header';
 import { actionScorePlayer, increaseCorrect } from '../redux/actions';
 import '../App.css';
@@ -117,8 +118,8 @@ class Game extends Component {
   };
 
   nextQuestion = () => {
-    const { index } = this.state;
-    const { history } = this.props;
+    const { index, scorePlayer } = this.state;
+    const { history, name: { name }, gravatarEmail } = this.props;
     const FOUR = 4;
     this.setState({
       index: index + 1,
@@ -127,6 +128,17 @@ class Game extends Component {
     }, () => this.shuffleAnswers());
     // this.shuffleAnswers();
     if (index === FOUR) {
+      const hashedEmail = md5(gravatarEmail.email).toString();
+      const url = `https://www.gravatar.com/avatar/${hashedEmail}`;
+      const ranking = JSON.parse(localStorage.getItem('ranking'));
+      const playerResults = { name, score: scorePlayer, picture: url };
+      // if (ranking.length > 1) {
+      if (ranking) {
+        ranking.push(playerResults);
+        localStorage.setItem('ranking', JSON.stringify(ranking));
+      } else {
+        localStorage.setItem('ranking', JSON.stringify([playerResults]));
+      }
       history.push('/feedback');
     }
   };
@@ -204,14 +216,18 @@ class Game extends Component {
   }
 }
 
-const mapStateToProps = ({ reducerTrivia: { trivia: { results } } }) => ({
-  resultApi: results,
+const mapStateToProps = (state) => ({
+  resultApi: state.reducerTrivia.trivia.results,
+  name: state.name,
+  gravatarEmail: state,
 });
 
 Game.propTypes = {
   resultApi: arrayOf(shape()).isRequired,
   dispatch: func.isRequired,
   history: shape().isRequired,
+  name: shape().isRequired,
+  gravatarEmail: shape().isRequired,
 };
 
 export default connect(mapStateToProps)(Game);
