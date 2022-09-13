@@ -1,11 +1,13 @@
 body {
   background-image: url('/src/img/background.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
   height: max-content;
   left: -7px;
   overflow: hidden;
   position: relative;
   top: 0;
-  width: 1287px;
+  width: 100vw;
 }
 
 /* main {
@@ -66,13 +68,19 @@ form {
   width: 80%;
 }
 
-#button-block {
+.buttons:disabled {
   background-color: #81a197;
-  cursor: not-allowed;
   color: #2c3834;
+  cursor: not-allowed;
 }
 
 .buttons:hover {
   background-color: #099662;
 
+}
+
+.buttons:disabled:hover {
+  background-color: #81a197;
+  color: #2c3834;
+  cursor: not-allowed;
 }
