@@ -68,6 +68,7 @@ class Login extends Component {
     return (
       <main>
         <form onSubmit={ this.login }>
+          <h2>Sua Vez de Jogar</h2>
           <input
             type="text"
             data-testid="input-player-name"
