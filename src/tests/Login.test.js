@@ -3,12 +3,13 @@ import userEvent from '@testing-library/user-event';
 import { cleanup, screen, waitFor } from '@testing-library/react';
 import App from '../App';
 import renderWithRouterAndredux from './helpers/renderWithRouterAndRedux';
+import Login from '../pages/Login';
 
 describe('Testando o componente <Login.jsx />', () => {
   beforeEach(cleanup);
 
-  test('1- Testa se a página de "Login" é renderizada corretamente', () => {
-    const { history } = renderWithRouterAndredux(<App />);
+  test('1- Testa se a página de "Login" é renderizada corretamente na rota "/"', () => {
+    const { history } = renderWithRouterAndredux(<Login />);
 
     expect(history.location.pathname).toBe('/');
   });
@@ -53,12 +54,13 @@ describe('Testando o componente <Login.jsx />', () => {
   });
 
   test('7- Testa se nome e email preenchidos corretamente, o botão "Play" habilita e'
-+ 'se clicado, redireciona a página para a página do jogo "<Game />"', () => {
++ 'se clicado, redireciona a página para a página do jogo "<Game />"', async () => {
   const { history } = renderWithRouterAndredux(<App />);
 
   const inputName = screen.getByTestId('input-player-name');
   const inputEmail = screen.getByTestId('input-gravatar-email');
   const loginButton = screen.getByTestId('btn-play');
+//  console.log(loginButton);
 
   userEvent.type(inputName, 'nome');
   userEvent.type(inputEmail, 'email@email.com');
@@ -66,7 +68,12 @@ describe('Testando o componente <Login.jsx />', () => {
   expect(loginButton.disabled).toBeFalsy();
   
   userEvent.click(loginButton);
-  const { pathname } = history.location;
-  setTimeout(() => {expect(pathname).toBe('/game');}, 1000) 
-  });
+//  const { pathname } = history.location;
+//  console.log(pathname);
+  expect(screen.getByAltText('imagem do avatar')).toBeInTheDocument();
+  await waitFor(() => {
+    expect(screen.getByAltText('imagem do avatar')).toBeInTheDocument();
+    expect(history.location.pathname).toBe('/game') 
+  })  
+});
 });
