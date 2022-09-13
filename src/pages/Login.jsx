@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { shape, func } from 'prop-types';
 import { submitEmail, submitName, actionApiTrivia, actionTrivia } from '../redux/actions';
 import { getApiTrivia } from '../data/APITrivia';
+import '../css/login.css';
+import logoTrivia from '../img/logotrivia.png';
 
 class Login extends Component {
   constructor() {
@@ -65,13 +67,18 @@ class Login extends Component {
 
   render() {
     const { name, email, isDisabled } = this.state;
+    console.log(logoTrivia);
     return (
       <main>
+
+        <img className="img-balao" src={ logoTrivia } alt="imagem de um balão" />
+
         <form onSubmit={ this.login }>
           <h2>Sua Vez de Jogar</h2>
           <input
             type="text"
             data-testid="input-player-name"
+            className="inputs"
             onChange={ this.handleChange }
             name="name"
             value={ name }
@@ -80,6 +87,7 @@ class Login extends Component {
           <input
             type="email"
             data-testid="input-gravatar-email"
+            className="inputs"
             onChange={ this.handleChange }
             name="email"
             value={ email }
@@ -88,18 +96,21 @@ class Login extends Component {
           <button
             type="submit"
             data-testid="btn-play"
+            className="buttons"
+            id={ isDisabled ? 'button-block' : undefined }
             disabled={ isDisabled }
           >
             Play
           </button>
+          <button
+            type="button"
+            data-testid="btn-settings"
+            className="buttons"
+            onClick={ this.handleClick }
+          >
+            Configurações
+          </button>
         </form>
-        <button
-          type="button"
-          data-testid="btn-settings"
-          onClick={ this.handleClick }
-        >
-          Configurações
-        </button>
       </main>
 
     );
