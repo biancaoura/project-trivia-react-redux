@@ -32,10 +32,15 @@ class Game extends Component {
   shuffleAnswers = () => {
     const { resultApi } = this.props;
     const { index } = this.state;
-    const wrongAnswers = resultApi[index].incorrect_answers.map((v) => v);
-    const correctAnswer = resultApi[index].correct_answer;
 
-    const allAnswers = [...wrongAnswers, correctAnswer];
+    const apiReturn = resultApi[index];
+
+    const wrongAnswers = apiReturn !== undefined
+    && apiReturn.incorrect_answers.map((v) => v);
+
+    const correctAnswer = apiReturn !== undefined && apiReturn.correct_answer;
+
+    const allAnswers = [] || [...wrongAnswers, correctAnswer];
 
     this.setState({ correctAnswer });
 
@@ -140,7 +145,7 @@ class Game extends Component {
       <div>
         <Header />
         <p data-testid="question-category">
-          {resultApi[index].category}
+          {resultApi[index] !== undefined && resultApi[index].category}
         </p>
 
         <div data-testid="timer">
@@ -152,7 +157,7 @@ class Game extends Component {
         </div>
 
         <p data-testid="question-text">
-          {resultApi[index].question}
+          {resultApi[index] !== undefined && resultApi[index].question}
 
         </p>
         <div data-testid="answer-options">
@@ -193,9 +198,13 @@ const mapStateToProps = ({ reducerTrivia: { trivia: { results } } }) => ({
 });
 
 Game.propTypes = {
-  resultApi: arrayOf(shape()).isRequired,
+  resultApi: arrayOf(shape()),
   dispatch: func.isRequired,
   history: shape().isRequired,
+};
+
+Game.defaultProps = {
+  resultApi: [],
 };
 
 export default connect(mapStateToProps)(Game);

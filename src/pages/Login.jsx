@@ -115,10 +115,14 @@ const mapDispatchToProps = (dispatch) => ({
 
 Login.propTypes = {
   dispatchTrivia: func.isRequired,
-  history: shape().isRequired,
+  history: shape(),
   dispatchName: func.isRequired,
   dispatchEmail: func.isRequired,
   dispatchAPITrivia: func.isRequired,
+};
+
+Login.defaultProps = {
+  history: {},
 };
 
 export default connect(null, mapDispatchToProps)(Login);
