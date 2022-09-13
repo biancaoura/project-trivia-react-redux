@@ -29,18 +29,18 @@ class Game extends Component {
   //   }
   // }
 
-  shuffleAnswers = () => {
+  shuffleAnswers = async () => {
     const { resultApi } = this.props;
     const { index } = this.state;
 
-    const apiReturn = resultApi[index];
+    const apiReturn = await resultApi[index];
 
     const wrongAnswers = apiReturn !== undefined
     && apiReturn.incorrect_answers.map((v) => v);
 
     const correctAnswer = apiReturn !== undefined && apiReturn.correct_answer;
 
-    const allAnswers = [] || [...wrongAnswers, correctAnswer];
+    const allAnswers = [...wrongAnswers, correctAnswer] || [];
 
     this.setState({ correctAnswer });
 

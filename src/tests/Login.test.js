@@ -1,6 +1,6 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { cleanup, screen, waitFor } from '@testing-library/react';
+import { cleanup, findByRole, screen, waitFor } from '@testing-library/react';
 import App from '../App';
 import renderWithRouterAndredux, { renderWithRouterAndRedux } from './helpers/renderWithRouterAndRedux';
 import Login from '../pages/Login';
@@ -160,6 +160,7 @@ describe('Testando chamada de API', () => {
 
     await waitFor(() => {
       expect(history.push).toHaveBeenCalledWith('/game');
+      // findByRole('img');
     });
   });
 });
