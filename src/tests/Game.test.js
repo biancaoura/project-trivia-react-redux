@@ -136,13 +136,13 @@ describe('Verifica interação com interface do jogo', () => {
     expect(screen.getAllByText('280')).toHaveLength(2);
     userEvent.click(screen.getByRole('button', { name: 'Next' }))
 
-    userEvent.click(screen.getByRole('button', { name: '10 Gb/s' }));
-    expect(screen.getAllByText('350')).toHaveLength(2);
+    userEvent.click(screen.getByRole('button', { name: '1 Gb/s' }));
+    expect(screen.getAllByText('280')).toHaveLength(2);
     userEvent.click(screen.getByRole('button', { name: 'Next' }))
 
     expect(screen.getByText('Well Done!')).toBeInTheDocument();
-    expect(screen.getByRole('heading', { level: 1, name: '350' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { level: 3, name: '5' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1, name: '280' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 3, name: '4' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Play again' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Ranking' })).toBeInTheDocument();
 
