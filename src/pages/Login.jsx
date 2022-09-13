@@ -96,7 +96,6 @@ class Login extends Component {
           <button
             type="submit"
             data-testid="btn-play"
-            // id={ isDisabled ? 'button-block' : undefined }
             className={ isDisabled ? 'buttons disabled' : 'buttons' }
             disabled={ isDisabled }
           >
@@ -105,7 +104,7 @@ class Login extends Component {
           <button
             type="button"
             data-testid="btn-settings"
-            className="buttons"
+            className="buttons unbelievable"
             onClick={ this.handleClick }
           >
             Configurações
