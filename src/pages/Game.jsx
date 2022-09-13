@@ -63,7 +63,7 @@ class Game extends Component {
   setTimer = () => {
     const ONE_SECOND = 1000;
     setInterval(() => {
-      this.setState((preventState) => ({ secondTimer: preventState.secondTimer - 1 }));
+      this.setState((prevState) => ({ secondTimer: prevState.secondTimer - 1 }));
     }, ONE_SECOND);
   };
 
