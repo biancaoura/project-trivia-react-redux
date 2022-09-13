@@ -7,7 +7,7 @@ body {
   overflow: hidden;
   position: relative;
   top: 0;
-  width: 100vw;
+  width: max-content;
 }
 
 /* main {
@@ -17,10 +17,10 @@ body {
 
 .img-balao {
   height: 259.07px;
-  left: 525px;
+  left: 545px;
   position: absolute;
   top: 44.97px;
-  width: 230px;
+  /* width: 230px; */
 
 }
 
@@ -47,16 +47,21 @@ form {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  height: 40px;
   margin: 6px;
   outline: none;
-  padding: 12px 16px;
-  width: 80%;
+  padding-left: 15px;
+  width: 76%;
 }
 
-.buttons {
+/* .inputs:placeholder {
   background-color: #08754d;
+} */
+
+.buttons {
+  background-color: #4f185a;
   border: none;
-  border-radius: 17px;
+  border-radius: 10px;
   color: white;
   cursor: pointer;
   height: 40px;
@@ -67,6 +72,10 @@ form {
   width: 80%;
 }
 
+.unbelievable {
+  background-color: #0a5840;
+}
+
 .buttons:disabled {
   background-color: #81a197;
   color: #2c3834;
@@ -74,9 +83,15 @@ form {
 }
 
 .buttons:hover {
-  background-color: #099662;
+  background-color: #492869;
 
 }
+
+.unbelievable:hover {
+  background-color: #185a42;
+
+}
+
 
 .buttons:disabled:hover {
   background-color: #81a197;
