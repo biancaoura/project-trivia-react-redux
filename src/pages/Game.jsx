@@ -18,16 +18,10 @@ class Game extends Component {
     };
   }
 
-  componentDidMount() {
-    this.shuffleAnswers();
+  async componentDidMount() {
+    await this.shuffleAnswers();
     this.setTimer();
   }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevState.secondTimer === 0) {
-  //     this.setState({ secondTimer: 30 });
-  //   }
-  // }
 
   shuffleAnswers = async () => {
     const { resultApi } = this.props;
@@ -35,12 +29,11 @@ class Game extends Component {
 
     const apiReturn = await resultApi[index];
 
-    const wrongAnswers = apiReturn !== undefined
-    && apiReturn.incorrect_answers.map((v) => v);
+    const wrongAnswers = apiReturn.incorrect_answers.map((v) => v);
 
-    const correctAnswer = apiReturn !== undefined && apiReturn.correct_answer;
+    const correctAnswer = apiReturn.correct_answer;
 
-    const allAnswers = [...wrongAnswers, correctAnswer] || [];
+    const allAnswers = [...wrongAnswers, correctAnswer];
 
     this.setState({ correctAnswer });
 
@@ -140,12 +133,11 @@ class Game extends Component {
     const { resultApi } = this.props;
     const { index, allAnswers, selectedAnswer, secondTimer, scorePlayer } = this.state;
 
-    // const MINUS_ONE = 0;
     return (
       <div>
         <Header />
         <p data-testid="question-category">
-          {resultApi[index] !== undefined && resultApi[index].category}
+          {resultApi[index].category}
         </p>
 
         <div data-testid="timer">
@@ -157,7 +149,7 @@ class Game extends Component {
         </div>
 
         <p data-testid="question-text">
-          {resultApi[index] !== undefined && resultApi[index].question}
+          {resultApi[index].question}
 
         </p>
         <div data-testid="answer-options">

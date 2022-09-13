@@ -41,7 +41,7 @@ describe('Testando o componente <Login.jsx />', () => {
     renderWithRouterAndredux(<App />);
 
     const inputEmail = screen.getByTestId('input-gravatar-email');
-    expect(inputEmail).toBeDefined();
+    expect(inputEmail).toBeInTheDocument();
   });
 
   test('5- Testa se a página contém um botão de "Configurações" e se, ao clicar nele, ocorre o redirecionamento para a página "Configurações"', () => {
@@ -50,71 +50,38 @@ describe('Testando o componente <Login.jsx />', () => {
     const settingsButton = screen.getByTestId('btn-settings');
     expect(settingsButton).toBeInTheDocument();
     userEvent.click(settingsButton);
-    expect(history.location.pathname).toBe('/settings');
+
+    const { location: { pathname } } = history;
+    expect(pathname).toBe('/settings');
   });
 
   test('6- Testa se a página contém um botão "Play" e ela inicialmente está desabilitada', () => {
     renderWithRouterAndredux(<App />);
 
     const loginButton = screen.getByTestId('btn-play');
-    expect(loginButton.disabled).toBeTruthy();
+    expect(loginButton).toBeDisabled();
   });
 
   test('7- Testa se nome e email preenchidos corretamente, o botão "Play" habilita', () => {
-  renderWithRouterAndredux(<App />);
+    renderWithRouterAndredux(<App />);
 
-  const inputName = screen.getByTestId('input-player-name');
-  const inputEmail = screen.getByTestId('input-gravatar-email');
-  const loginButton = screen.getByTestId('btn-play');
+    const inputName = screen.getByTestId('input-player-name');
+    const inputEmail = screen.getByTestId('input-gravatar-email');
+    const loginButton = screen.getByTestId('btn-play');
 
-  expect(loginButton.disabled).toBeTruthy();
+    expect(loginButton).toBeDisabled();
 
-  userEvent.type(inputName, 'nome');
+    userEvent.type(inputName, 'nome');
 
-  expect(loginButton.disabled).toBeTruthy();
-  
-  userEvent.type(inputEmail, 'email@email.com');
-  
-  expect(loginButton.disabled).toBeFalsy();
-});
-
-// test('7- Testa se nome e email preenchidos corretamente, o botão "Play" habilita, e se clicado, redireciona para a página do jogo "<Game />"', async () => {
-//   const { history: { location: { pathname }, push } } = renderWithRouterAndredux(<App />);
-
-//   const inputName = screen.getByTestId('input-player-name');
-//   const inputEmail = screen.getByTestId('input-gravatar-email');
-//   const loginButton = screen.getByTestId('btn-play');
-
-//   expect(loginButton.disabled).toBeTruthy();
-
-//   userEvent.type(inputName, 'nome');
-//   userEvent.type(inputEmail, 'teste');
-
-//   expect(loginButton.disabled).toBeTruthy();
-  
-//   userEvent.type(inputName, 'nome');
-//   userEvent.type(inputEmail, 'email@email.com');
-  
-//   expect(loginButton.disabled).toBeFalsy();
-  
-//   // userEvent.click(loginButton);
-//   await (waitFor(() => push('/game')))
-
-//   // console.log(pathname);
-//   // expect(screen.getByAltText('imagem do avatar')).toBeInTheDocument();
-//   // await (screen.findByRole('img'))
-//   // await waitFor(() => {
-//   //   expect(screen.getByAltText('imagem do avatar')).toBeInTheDocument();
-//   // //   expect(history.location.pathname).toBe('/game') 
-//   // });
-// });
+    expect(loginButton).toBeDisabled();
+    
+    userEvent.type(inputEmail, 'email@email.com');
+    
+    expect(loginButton).toBeEnabled();
+  });
 });
 
 describe('Testando chamada de API', () => {
-  // beforeEach(() => {
-    // renderWithRouterAndRedux(<App />, initialState);
-  // });
-
   test('1 - Verifica se o fetch foi chamado', async () => {
     jest.spyOn(global, 'fetch');
     global.fetch = jest.fn(() => Promise.resolve({
@@ -133,7 +100,6 @@ describe('Testando chamada de API', () => {
 
     expect(global.fetch).toHaveBeenCalled();
     expect(global.fetch).toHaveBeenCalledWith('https://opentdb.com/api_token.php?command=request');
-
   });
 
   test('2 - Testa se o jogo é iniciado', async () => {
@@ -142,7 +108,7 @@ describe('Testando chamada de API', () => {
       json: jest
         .fn()
         .mockResolvedValueOnce(mockTokenAPI)
-        .mockResolvedValue(initialState)
+        .mockResolvedValue(initialState.reducerTrivia.trivia)
     });
     
     const { history } = renderWithRouterAndRedux(<App />);
@@ -160,7 +126,6 @@ describe('Testando chamada de API', () => {
 
     await waitFor(() => {
       expect(history.push).toHaveBeenCalledWith('/game');
-      // findByRole('img');
     });
   });
 });

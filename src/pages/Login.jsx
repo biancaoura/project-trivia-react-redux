@@ -47,19 +47,17 @@ class Login extends Component {
     const APITrivia = await getApiTrivia();
     const validAPI = APITrivia.trivia.response_code;
 
-    const THREE = 3;
-
     await dispatchTrivia();
     await dispatchAPITrivia();
 
     dispatchName(name);
     dispatchEmail(email);
 
-    if (validAPI === THREE) {
-      push('/');
-      localStorage.clear();
-    } else {
+    if (validAPI === 0) {
       push('/game');
+    } else {
+      localStorage.clear();
+      push('/');
     }
   };
 
