@@ -1,0 +1,141 @@
+main {
+  /* background-image: url('./images/25235\ 2.png');
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 85px; */
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+}
+
+.category {
+  width: 413px;
+  height: 45px;
+  /* margin-left: 114px; */
+  top: 275px;
+  background: #233D33;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.12em;
+  justify-content: center;
+  /* z-index: 1; */
+}
+
+.question-section {
+  /* position: absolute; */
+  width: 439px;
+  height: 286px;
+  margin-left: 80px;
+  margin-top: 80px;
+  top: 40px;
+  background: #FFFFFF;
+  box-shadow: 1px 4px 13px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.question-section p {
+  width: 413px;
+  left: 114px;
+  font-family: 'Epilogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 150%;
+  color: #000000;
+}
+
+.category p {
+  width: 184px;
+  height: 24px;
+  left: 228px;
+  top: 288px;
+  font-family: 'Epilogue';
+  font-style: normal;
+  font-weight: 1000;
+  font-size: 18px;
+  line-height: 24px;
+  color: #FFFFFF;
+}
+
+.rt-game-info {
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: space-around;
+  width: 413px;
+  height: 38px;
+  left: 114px;
+  top: 545px;
+  font-family: 'Verdana';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 150%;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.12em;
+  color: #EA5D5D;
+}
+
+div .answer-option {
+  width: 60%;
+}
+
+.answers {
+  margin-top: 70px;
+}
+
+.answer-option {
+  box-sizing: border-box;
+
+  /* position: absolute; */
+  width: 519px;
+  height: 64px;
+  left: 661px;
+  /* top: 361px; */
+  margin: 10px;
+  background: #FFFFFF;
+  border: 1px solid #FFFFFF;
+  border-radius: 100px;
+}
+
+.correct {
+  border: 3px solid rgb(6, 240, 15);
+}
+
+.wrong {
+  border: 3px solid red;
+}
+
+.buttons {
+  border: 3px solid red;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+}
+
+.next-question {
+  /* position: absolute; */
+  width: 58%;
+  height: 45px;
+  left: 661px;
+  top: 575px;
+  margin-top: 30px;
+  margin-left: 20px;
+  background: #582E83;
+  color: white;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+}

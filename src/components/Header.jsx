@@ -14,13 +14,17 @@ class Header extends Component {
     return (
 
       <header>
-        <img
-          src={ this.hashEmail(email) }
-          alt="imagem do avatar"
-          data-testid="header-profile-picture"
-        />
-        <h4 data-testid="header-player-name">{ name }</h4>
-        <p data-testid="header-score">{ score }</p>
+        <div>
+          <div className="player-info">
+            <img
+              src={ this.hashEmail(email) }
+              alt="imagem do avatar"
+              data-testid="header-profile-picture"
+            />
+            <h4 data-testid="header-player-name">{ name }</h4>
+          </div>
+          <p data-testid="header-score">{ score }</p>
+        </div>
       </header>
     );
   }

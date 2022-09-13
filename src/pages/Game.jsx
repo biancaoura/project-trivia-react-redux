@@ -139,50 +139,66 @@ class Game extends Component {
     return (
       <div>
         <Header />
-        <p data-testid="question-category">
-          {resultApi[index].category}
-        </p>
+        <main>
 
-        <div data-testid="timer">
-          { secondTimer }
-        </div>
+          <section className="question-section">
 
-        <div data-testid="score">
-          { scorePlayer }
-        </div>
+            <section className="category">
+              <p data-testid="question-category">
+                {resultApi[index].category}
+              </p>
+            </section>
 
-        <p data-testid="question-text">
-          {resultApi[index].question}
+            <p data-testid="question-text">
+              {resultApi[index].question}
+            </p>
 
-        </p>
-        <div data-testid="answer-options">
-          {allAnswers
-            .map(
-              (v, i) => (
-                <button
-                  data-testid={ this.setTestId(v, i) }
-                  key={ i }
-                  className={ selectedAnswer ? this.setColor(v) : undefined }
-                  onClick={ () => this.handleClick(this.setColor(v)) }
-                  type="button"
-                  disabled={ secondTimer <= 0 }
-                >
-                  {v}
-                </button>),
-            )}
-        </div>
-        {
-          selectedAnswer
+            <section className="rt-game-info">
+              <div data-testid="timer">
+                { secondTimer }
+              </div>
+
+              <div data-testid="score">
+                { scorePlayer }
+              </div>
+            </section>
+
+          </section>
+
+          <div className="buttons">
+            <div className="answers" data-testid="answer-options">
+              {allAnswers
+                .map(
+                  (v, i) => (
+                    <button
+                      data-testid={ this.setTestId(v, i) }
+                      key={ i }
+                      className={ `${selectedAnswer ? this.setColor(v) : undefined}
+                     answer-option` }
+                      onClick={ () => this.handleClick(this.setColor(v)) }
+                      type="button"
+                      disabled={ secondTimer <= 0 }
+                    >
+                      {v}
+                    </button>),
+                )}
+            </div>
+            {
+              selectedAnswer
           && (
             <button
               type="button"
               data-testid="btn-next"
               onClick={ this.nextQuestion }
+              className="next-question"
             >
               Next
             </button>
           )
-        }
+            }
+          </div>
+
+        </main>
       </div>
     );
   }
