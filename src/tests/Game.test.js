@@ -1,6 +1,5 @@
-// import Game from '../pages/Game'
 import App from '../App'
-import { screen } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux'
 import userEvent from '@testing-library/user-event';
 
@@ -106,17 +105,19 @@ describe('Verifica renderização da página de jogo', () => {
 });
 
 describe('Verifica interação com interface do jogo', () => {
-  beforeEach(() => {
-    renderWithRouterAndRedux(<App />, initialState, route);
-  });
+  // beforeEach(() => {
+  //   const {history} = renderWithRouterAndRedux(<App />, initialState, route);
+  // });
   test('1 - Verifica mudança de cores nos botões depois da resposta', () => {
+    renderWithRouterAndRedux(<App />, initialState, route);
     userEvent.click(screen.getByRole('button', { name: 'Think' }));
     expect(screen.getByRole('button', { name: 'Think' }).className).toContain('correct');
     expect(screen.getByRole('button', { name: 'Click' }).className).toContain('wrong');
     expect(screen.getByRole('button', { name: 'Logic' }).className).toContain('wrong');
     expect(screen.getByRole('button', { name: 'Pixel' }).className).toContain('wrong');
   })
-  test('2 - Verifica progressão da pontuação no jogo e redirecionamento para feedback', () => {
+  test('2 - Verifica progressão da pontuação no jogo e redirecionamento para feedback', async () => {
+    const { history } = renderWithRouterAndRedux(<App />, initialState, route);
     userEvent.click(screen.getByRole('button', { name: 'Think' }));
     expect(screen.getAllByText('70')).toHaveLength(2);
     userEvent.click(screen.getByRole('button', { name: 'Next' }))
@@ -142,6 +143,24 @@ describe('Verifica interação com interface do jogo', () => {
     expect(screen.getByRole('heading', { level: 3, name: '5' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Play again' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Ranking' })).toBeInTheDocument();
-
+    await waitFor(() => {
+      expect(history.location.pathname).toMatch('/feedback')
+    })
+  });
+  test('3 - timer', () => {
+    renderWithRouterAndRedux(<App />, initialState, route);
+    jest.useFakeTimers();
+    jest.spyOn(global, 'setInterval');
+    const timer = require('./helpers/setTimer');
+    timer();
+    expect(setInterval).toHaveBeenCalled();
+    // const THIRTY_SECONDS = 30;
+    // setInterval(() => {
+      // if (THIRTY_SECONDS > 0) THIRTY_SECONDS - 1;
+      // expect(screen.getByText(THIRTY_SECONDS.toString())).toBeInTheDocument();
+      // if (THIRTY_SECONDS === 0) {
+        // expect(screen.getByRole('button', { name: 'Next' })).toBeInTheDocument();
+      // }
+    // }, 1000);
   })
-})
+});
