@@ -49,19 +49,17 @@ class Login extends Component {
     const APITrivia = await getApiTrivia();
     const validAPI = APITrivia.trivia.response_code;
 
-    const THREE = 3;
-
     await dispatchTrivia();
     await dispatchAPITrivia();
 
     dispatchName(name);
     dispatchEmail(email);
 
-    if (validAPI === THREE) {
-      push('/');
-      localStorage.clear();
-    } else {
+    if (validAPI === 0) {
       push('/game');
+    } else {
+      localStorage.clear();
+      push('/');
     }
   };
 
@@ -125,10 +123,14 @@ const mapDispatchToProps = (dispatch) => ({
 
 Login.propTypes = {
   dispatchTrivia: func.isRequired,
-  history: shape().isRequired,
+  history: shape(),
   dispatchName: func.isRequired,
   dispatchEmail: func.isRequired,
   dispatchAPITrivia: func.isRequired,
+};
+
+Login.defaultProps = {
+  history: {},
 };
 
 export default connect(null, mapDispatchToProps)(Login);

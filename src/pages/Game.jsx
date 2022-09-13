@@ -19,22 +19,20 @@ class Game extends Component {
     };
   }
 
-  componentDidMount() {
-    this.shuffleAnswers();
+  async componentDidMount() {
+    await this.shuffleAnswers();
     this.setTimer();
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevState.secondTimer === 0) {
-  //     this.setState({ secondTimer: 30 });
-  //   }
-  // }
-
-  shuffleAnswers = () => {
+  shuffleAnswers = async () => {
     const { resultApi } = this.props;
     const { index } = this.state;
-    const wrongAnswers = resultApi[index].incorrect_answers.map((v) => v);
-    const correctAnswer = resultApi[index].correct_answer;
+
+    const apiReturn = await resultApi[index];
+
+    const wrongAnswers = apiReturn.incorrect_answers.map((v) => v);
+
+    const correctAnswer = apiReturn.correct_answer;
 
     const allAnswers = [...wrongAnswers, correctAnswer];
 
@@ -147,7 +145,6 @@ class Game extends Component {
     const { resultApi } = this.props;
     const { index, allAnswers, selectedAnswer, secondTimer, scorePlayer } = this.state;
 
-    // const MINUS_ONE = 0;
     return (
       <div>
         <Header />
@@ -207,11 +204,15 @@ const mapStateToProps = (state) => ({
 });
 
 Game.propTypes = {
-  resultApi: arrayOf(shape()).isRequired,
+  resultApi: arrayOf(shape()),
   dispatch: func.isRequired,
   history: shape().isRequired,
   name: shape().isRequired,
   gravatarEmail: shape().isRequired,
+};
+
+Game.defaultProps = {
+  resultApi: [],
 };
 
 export default connect(mapStateToProps)(Game);
