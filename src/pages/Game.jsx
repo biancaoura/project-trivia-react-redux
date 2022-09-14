@@ -12,7 +12,7 @@ class Game extends Component {
     this.state = {
       index: 0,
       allAnswers: [],
-      secondTimer: 30,
+      milliseconds: 30,
       selectedAnswer: false,
       correctAnswer: '',
       scorePlayer: 0,
@@ -51,18 +51,18 @@ class Game extends Component {
     }
   };
 
-  setTestId = (v, i) => {
+  setTestId = (answer, i) => {
     const { resultApi } = this.props;
     const { index } = this.state;
 
     const correctAnswer = resultApi[index].correct_answer;
-    return v === correctAnswer ? 'correct-answer' : `wrong-answer-${i}`;
+    return answer === correctAnswer ? 'correct-answer' : `wrong-answer-${i}`;
   };
 
   setTimer = () => {
     const ONE_SECOND = 1000;
     setInterval(() => {
-      this.setState((prevState) => ({ secondTimer: prevState.secondTimer - 1 }));
+      this.setState((prevState) => ({ milliseconds: prevState.milliseconds - 1 }));
     }, ONE_SECOND);
   };
 
@@ -86,12 +86,11 @@ class Game extends Component {
     } else {
       difficulty += THREE;
     }
-
     return difficulty;
   };
 
   setScore = (className) => {
-    const { secondTimer } = this.state;
+    const { milliseconds } = this.state;
     const { dispatch } = this.props;
 
     const TEN = 10;
@@ -101,7 +100,7 @@ class Game extends Component {
     let assertions = 0;
 
     if (className === 'correct') {
-      (scores += TEN + (secondTimer * difficulty));
+      (scores += TEN + (milliseconds * difficulty));
       assertions += 1;
     }
 
@@ -122,7 +121,7 @@ class Game extends Component {
     this.setState({
       index: index + 1,
       selectedAnswer: false,
-      secondTimer: 30,
+      milliseconds: 30,
     }, () => this.shuffleAnswers());
     if (index === FOUR) {
       const hashedEmail = md5(gravatarEmail.email).toString();
@@ -142,7 +141,7 @@ class Game extends Component {
 
   render() {
     const { resultApi } = this.props;
-    const { index, allAnswers, selectedAnswer, secondTimer, scorePlayer } = this.state;
+    const { index, allAnswers, selectedAnswer, milliseconds, scorePlayer } = this.state;
 
     return (
       <div>
@@ -152,7 +151,7 @@ class Game extends Component {
         </p>
 
         <div data-testid="timer">
-          { secondTimer }
+          { milliseconds }
         </div>
 
         <div data-testid="score">
@@ -166,16 +165,16 @@ class Game extends Component {
         <div data-testid="answer-options">
           {allAnswers
             .map(
-              (v, i) => (
+              (answer, i) => (
                 <button
-                  data-testid={ this.setTestId(v, i) }
+                  data-testid={ this.setTestId(answer, i) }
                   key={ i }
-                  className={ selectedAnswer ? this.setColor(v) : undefined }
-                  onClick={ () => this.handleClick(this.setColor(v)) }
+                  className={ selectedAnswer ? this.setColor(answer) : undefined }
+                  onClick={ () => this.handleClick(this.setColor(answer)) }
                   type="button"
-                  disabled={ secondTimer <= 0 }
+                  disabled={ milliseconds <= 0 }
                 >
-                  {v}
+                  {answer}
                 </button>),
             )}
         </div>

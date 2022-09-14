@@ -22,11 +22,11 @@ describe('Testando o componente <Login.jsx />', () => {
     expect(history.location.pathname).toBe('/');
   });
 
-  test('2- Testa se existe um "h2" na tela com o título "Sua Vez de Jogar"', () => {
+  test('2- Testa se existe um título na tela', () => {
     renderWithRouterAndredux(<App />);
 
     const loginTittle = screen.getByRole('heading', { level: 2,
-      name: 'Sua Vez de Jogar' });
+      name: /time to play/i });
     expect(loginTittle).toBeInTheDocument();
   });
 

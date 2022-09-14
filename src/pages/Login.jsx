@@ -68,11 +68,9 @@ class Login extends Component {
 
     return (
       <main>
-
         <img className="img-balao" src={ logoTrivia } alt="imagem de um balão" />
-
         <form onSubmit={ this.login }>
-          <h2>Sua Vez de Jogar</h2>
+          <h2>Time to play</h2>
           <input
             type="text"
             data-testid="input-player-name"
@@ -105,7 +103,7 @@ class Login extends Component {
             className="buttons unbelievable"
             onClick={ this.handleClick }
           >
-            Configurações
+            Settings
           </button>
         </form>
       </main>

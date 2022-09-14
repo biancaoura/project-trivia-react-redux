@@ -43,7 +43,7 @@ describe('Testa a página de feedback', () => {
 
       userEvent.click(playAgainBtn);
 
-      expect(screen.getByText(/Sua Vez de Jogar/i)).toBeInTheDocument();
+      expect(screen.getByText(/time to play/i)).toBeInTheDocument();
     });
 
     test('Testa o Redirecionamento do botão Ranking', async () => {
