@@ -49,25 +49,23 @@ class Login extends Component {
     const APITrivia = await getApiTrivia();
     const validAPI = APITrivia.trivia.response_code;
 
-    const THREE = 3;
-
     await dispatchTrivia();
     await dispatchAPITrivia();
 
     dispatchName(name);
     dispatchEmail(email);
 
-    if (validAPI === THREE) {
-      push('/');
-      localStorage.clear();
-    } else {
+    if (validAPI === 0) {
       push('/game');
+    } else {
+      localStorage.clear();
+      push('/');
     }
   };
 
   render() {
     const { name, email, isDisabled } = this.state;
-    console.log(logoTrivia);
+
     return (
       <main>
 
@@ -96,7 +94,6 @@ class Login extends Component {
           <button
             type="submit"
             data-testid="btn-play"
-            // id={ isDisabled ? 'button-block' : undefined }
             className={ isDisabled ? 'buttons disabled' : 'buttons' }
             disabled={ isDisabled }
           >
@@ -105,7 +102,7 @@ class Login extends Component {
           <button
             type="button"
             data-testid="btn-settings"
-            className="buttons"
+            className="buttons unbelievable"
             onClick={ this.handleClick }
           >
             Configurações
@@ -126,10 +123,14 @@ const mapDispatchToProps = (dispatch) => ({
 
 Login.propTypes = {
   dispatchTrivia: func.isRequired,
-  history: shape().isRequired,
+  history: shape(),
   dispatchName: func.isRequired,
   dispatchEmail: func.isRequired,
   dispatchAPITrivia: func.isRequired,
+};
+
+Login.defaultProps = {
+  history: {},
 };
 
 export default connect(null, mapDispatchToProps)(Login);
