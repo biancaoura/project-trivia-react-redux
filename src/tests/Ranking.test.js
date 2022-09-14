@@ -7,13 +7,6 @@ import { mockStorage, bino } from './helpers/mockStorage';
 
 import initialState from './helpers/mockResults';
 
-const mockTokenAPI = {
-  trivia: {
-  response_code: 0,
-  token: '73c91281427572dd212f48e1449df769db7d757c3c195a278d79ef83d52da3ca',
-  }
-};
-
 describe('Testa a página de Ranking da aplicação', () => {
   test('Testa se o botão é renderizado', () => {
     const { history } = renderWithRouterAndRedux(<App />);
@@ -24,17 +17,8 @@ describe('Testa a página de Ranking da aplicação', () => {
     expect(btn_go_home).toBeInTheDocument();
   });
 
-  test('Testa se ao clicar no botão a pagina é redirecionada para a home', () => {
-    // jest.spyOn(global, 'fetch');
-    // global.fetch.mockResolvedValue({
-    //   json: jest
-    //     .fn()
-    //     .mockResolvedValueOnce(mockTokenAPI)
-    //     .mockResolvedValue(initialState.reducerTrivia.trivia)
-    // });
-    
+  test('Testa se ao clicar no botão a pagina é redirecionada para a home', () => {    
     const { history } = renderWithRouterAndRedux(<App />, initialState );
-    // jest.spyOn(history, 'push');
     history.push('/ranking');
 
     const btn_go_home = screen.getByTestId('btn-go-home');
@@ -45,27 +29,24 @@ describe('Testa a página de Ranking da aplicação', () => {
     const { pathname } = history.location
     expect(pathname).toBe('/')
 });
+});
 
-test('Teste', () => {
-    //   jest.spyOn(global, 'fetch');
-    // global.fetch.mockResolvedValue({
-    //   json: jest
-    //     .fn()
-    //     .mockResolvedValueOnce(mockTokenAPI)
-    //     .mockResolvedValue(initialState)
-    // });
-    localStorage.setItem('ranking', JSON.stringify([...mockStorage, bino]));
+  test('a', () => {
+    localStorage.setItem('ranking', JSON.stringify(mockStorage));
     const { history } = renderWithRouterAndRedux(<App />);
 
-    history.push('/ranking');
- 
-    expect(localStorage.getItem('ranking')).toEqual(JSON.stringify([...mockStorage, bino]));
-   
-    
-  // localStorage.setItem('ranking', JSON.stringify(mockStorage));
-  // expect(localStorage.getItem('ranking')).toEqual(JSON.stringify(mockStorage));
+    expect(localStorage.getItem('ranking')).toEqual(JSON.stringify(mockStorage));
+  });
 
+  test('Teste', () => {
+      const test = JSON.parse(localStorage.getItem('ranking'));
 
-  
-});
-})
+      console.log(test);
+      test.push(bino);
+      localStorage.setItem('ranking', JSON.stringify(test));
+      console.log(test);
+
+      const { history } = renderWithRouterAndRedux(<App />);
+      expect(localStorage.getItem('ranking')).toEqual(JSON.stringify([...mockStorage, bino]));
+
+  });
