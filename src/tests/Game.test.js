@@ -3,7 +3,7 @@ import { screen } from '@testing-library/react'
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux'
 import userEvent from '@testing-library/user-event';
 import initialState from './helpers/mockResults';
-import mockStorage from './helpers/mockStorage';
+import {mockStorage} from './helpers/mockStorage';
 
 const route = '/game';
 
@@ -102,11 +102,12 @@ describe('Verifica interação com interface do jogo', () => {
     userEvent.click(screen.getByRole('button', { name: 'Next' }));
 
     expect(screen.getByText('Well Done!')).toBeInTheDocument();
-    expect(localStorage.getItem('ranking')).toEqual(JSON.stringify([mockStorage]));
+    // console.log(JSON.stringify(mockStorage[0]));
+    expect(localStorage.getItem('ranking')).toEqual(JSON.stringify([mockStorage[0]]));
   });
 
   test('5 - Verifica se a pontuação é somada no localStorage', async () => {
-    expect(localStorage.getItem('ranking')).toEqual(JSON.stringify([mockStorage]));
+    expect(localStorage.getItem('ranking')).toEqual(JSON.stringify([mockStorage[0]]));
 
     userEvent.click(await screen.findByRole('button', { name: 'Think' }));
     userEvent.click(screen.getByRole('button', { name: 'Next' }));
@@ -124,7 +125,7 @@ describe('Verifica interação com interface do jogo', () => {
     userEvent.click(screen.getByRole('button', { name: 'Next' }));
 
     expect(screen.getByText('Well Done!')).toBeInTheDocument();
-    expect(localStorage.getItem('ranking')).toEqual(JSON.stringify([mockStorage, mockStorage]));
+    expect(localStorage.getItem('ranking')).toEqual(JSON.stringify([...mockStorage]));
   });
 });
 
