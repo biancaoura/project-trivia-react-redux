@@ -4,41 +4,53 @@ header {
   height: 113px;
   left: 0px;
   top: 0px;
-  background: #FFFFFF;
+  background: #349a73;
   display: flex;
-  flex-direction: row-reverse;
-  border: 1px solid red;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  justify-content: space-between;
+  color: aliceblue;
+  font-family: 'Epilogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
 }
 
-/* header div {
+.trivia-img {
+  margin-left: 80px;
+  height: 85%;
+  margin-top: 7px;
+}
+
+header div {
   width: 50%;
   display: flex;
   align-items: center;
-} */
+}
 
-/* .player-info {
+.player-info {
   display: flex;
   justify-content: flex-start;
   gap: 5px;
-} */
+  margin-left: 70px;
+  gap: 10px;
+}
 
-/* img {
+.user-image {
   width: 37px;
   height: 37px;
   left: 696px;
   top: 39px;
   border-radius: 18.1373px;
-} */
+}
 
-/* h4 {
+h4 {
   width: 144px;
   height: 24px;
   left: 746px;
   top: 49px;
-  font-family: 'Epilogue';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  color: #000000;
-} */
+}
+
+.score {
+  font-weight: bolder;
+}

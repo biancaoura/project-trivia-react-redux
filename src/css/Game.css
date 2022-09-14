@@ -1,19 +1,16 @@
-main {
-  /* background-image: url('./images/25235\ 2.png');
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 0px;
-  top: 85px; */
+.game-main {
+  height: 450px;
+  margin-top: 150px;
   display: flex;
   justify-content: center;
+  align-items:center;
+  flex-direction: row;
   gap: 80px;
 }
 
 .category {
   width: 413px;
-  height: 45px;
-  /* margin-left: 114px; */
+  min-height: 45px;
   top: 275px;
   background: #233D33;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -23,16 +20,11 @@ main {
   text-align: center;
   letter-spacing: 0.12em;
   justify-content: center;
-  /* z-index: 1; */
 }
 
 .question-section {
-  /* position: absolute; */
-  width: 439px;
-  height: 286px;
-  margin-left: 80px;
-  margin-top: 80px;
-  top: 40px;
+  height: 386px;
+  margin-left: 280px;
   background: #FFFFFF;
   box-shadow: 1px 4px 13px 2px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
@@ -44,7 +36,8 @@ main {
   justify-content: space-around;
 }
 
-.question-section p {
+.question-text {
+  min-height: 50px;
   width: 413px;
   left: 114px;
   font-family: 'Epilogue';
@@ -55,11 +48,7 @@ main {
   color: #000000;
 }
 
-.category p {
-  width: 184px;
-  height: 24px;
-  left: 228px;
-  top: 288px;
+.question-category {
   font-family: 'Epilogue';
   font-style: normal;
   font-weight: 1000;
@@ -69,7 +58,6 @@ main {
 }
 
 .rt-game-info {
-  /* border: 1px solid red; */
   display: flex;
   justify-content: space-around;
   width: 413px;
@@ -92,22 +80,17 @@ div .answer-option {
   width: 60%;
 }
 
-.answers {
-  margin-top: 70px;
-}
-
 .answer-option {
   box-sizing: border-box;
-
-  /* position: absolute; */
-  width: 519px;
   height: 64px;
-  left: 661px;
-  /* top: 361px; */
   margin: 10px;
   background: #FFFFFF;
   border: 1px solid #FFFFFF;
   border-radius: 100px;
+}
+
+.answer-option:hover {
+    border: 5px solid #582E83;
 }
 
 .correct {
@@ -118,24 +101,21 @@ div .answer-option {
   border: 3px solid red;
 }
 
-.buttons {
-  border: 3px solid red;
+.game-buttons {
   width: 50%;
-  display: flex;
-  flex-direction: column;
-  /* align-items: center; */
+  height: 100%;
+  margin-top: 30px;
 }
 
 .next-question {
-  /* position: absolute; */
   width: 58%;
   height: 45px;
   left: 661px;
   top: 575px;
   margin-top: 30px;
+  border-radius: 10px;
   margin-left: 20px;
   background: #582E83;
   color: white;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 5px;
 }

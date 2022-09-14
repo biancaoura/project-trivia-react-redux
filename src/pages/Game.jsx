@@ -4,7 +4,8 @@ import { arrayOf, func, shape } from 'prop-types';
 import md5 from 'crypto-js/md5';
 import Header from '../components/Header';
 import { actionScorePlayer, increaseCorrect } from '../redux/actions';
-import '../App.css';
+// import '../App.css';
+import '../css/Game.css';
 
 class Game extends Component {
   constructor() {
@@ -141,6 +142,12 @@ class Game extends Component {
     }
   };
 
+  decodeEntity = (inputStr) => {
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = inputStr;
+    return textarea.value;
+  };
+
   render() {
     const { resultApi } = this.props;
     const { index, allAnswers, selectedAnswer, secondTimer, scorePlayer } = this.state;
@@ -148,18 +155,18 @@ class Game extends Component {
     return (
       <div>
         <Header />
-        <main>
+        <main className="game-main">
 
           <section className="question-section">
 
             <section className="category">
-              <p data-testid="question-category">
+              <p className="question-category" data-testid="question-category">
                 {resultApi[index].category}
               </p>
             </section>
 
-            <p data-testid="question-text">
-              {resultApi[index].question}
+            <p className="question-text" data-testid="question-text">
+              { this.decodeEntity(resultApi[index].question) }
             </p>
 
             <section className="rt-game-info">
@@ -174,7 +181,7 @@ class Game extends Component {
 
           </section>
 
-          <div className="buttons">
+          <div className="game-buttons">
             <div className="answers" data-testid="answer-options">
               {allAnswers
                 .map(
@@ -188,7 +195,7 @@ class Game extends Component {
                       type="button"
                       disabled={ secondTimer <= 0 }
                     >
-                      {v}
+                      { this.decodeEntity(v)}
                     </button>),
                 )}
             </div>

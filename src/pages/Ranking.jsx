@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { shape } from 'prop-types';
+import '../css/Ranking.css';
 
 export default class Ranking extends Component {
   constructor() {
@@ -24,24 +25,41 @@ export default class Ranking extends Component {
   render() {
     const { ranking } = this.state;
     return (
-      <div>
+      <div className="ranking-main">
         <h1 data-testid="ranking-title">Ranking</h1>
-        {
-          ranking.map((position, index) => (
-            <section key={ position.picture }>
-              <img src={ position.picture } alt={ position.name } />
-              <h6 data-testid={ `player-name-${index}` }>{ position.name }</h6>
-              <h6 data-testid={ `player-score-${index}` }>{ position.score }</h6>
-            </section>
-          ))
-        }
-        <button
-          type="button"
-          data-testid="btn-go-home"
-          onClick={ this.handleClick }
-        >
-          Home
-        </button>
+        <div className="ranking-card">
+          {
+            ranking.map((position, index) => (
+              <section className="player-ranking-info" key={ position.picture }>
+                <div>
+                  <img
+                    className="player-ranking-image"
+                    src={ position.picture }
+                    alt={ position.name }
+                  />
+                  <h6 data-testid={ `player-name-${index}` }>{ position.name }</h6>
+                </div>
+                <div>
+                  <span>Score:</span>
+                  <h6
+                    className="player-ranking-score"
+                    data-testid={ `player-score-${index}` }
+                  >
+                    { position.score }
+                  </h6>
+                </div>
+              </section>
+            ))
+          }
+          <button
+            type="button"
+            data-testid="btn-go-home"
+            onClick={ this.handleClick }
+            className="home-button"
+          >
+            Home
+          </button>
+        </div>
       </div>
     );
   }
