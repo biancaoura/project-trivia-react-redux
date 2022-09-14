@@ -12,10 +12,10 @@ class Feedback extends Component {
     return 'Well Done!';
   };
 
-  handleClick = (e) => {
+  handleClick = ({ target: { id } }) => {
     const { history: { push } } = this.props;
 
-    if (e.target.id === 'play-again') push('/');
+    if (id === 'play-again') push('/');
     else push('/ranking');
   };
 
