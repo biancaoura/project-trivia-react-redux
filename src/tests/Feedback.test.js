@@ -3,7 +3,7 @@ import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 import App from '../App';
 import { screen } from '@testing-library/react';
 import userEvent from "@testing-library/user-event";
-import mockStorage from './helpers/mockStorage';
+import { mockStorage } from './helpers/mockStorage';
 
 describe('Testa a página de feedback', () => {
   describe('Testa renderização e cliques', () => {
@@ -43,10 +43,11 @@ describe('Testa a página de feedback', () => {
 
       userEvent.click(playAgainBtn);
 
-      expect(pathname).toBe('/feedback');
+      expect(screen.getByText(/Sua Vez de Jogar/i)).toBeInTheDocument();
+      // expect(pathname).toBe('/');
     });
 
-    test.only('Testa o Redirecionamento do botão Ranking', async () => {
+    test('Testa o Redirecionamento do botão Ranking', async () => {
       localStorage.setItem('ranking', JSON.stringify(mockStorage));
 
       const { history } = renderWithRouterAndRedux(<App />);
