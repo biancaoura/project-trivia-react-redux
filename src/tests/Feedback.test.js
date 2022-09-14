@@ -59,7 +59,7 @@ describe('Testa a página de feedback', () => {
       const { location: { pathname } } = history;
       expect(pathname).toBe('/ranking');
 
-      expect(localStorage.getItem('ranking')).toEqual(mockStorage);
+      expect(localStorage.getItem('ranking')).toEqual(JSON.stringify(mockStorage));
       
       const title = await screen.findByRole('heading', { name: /ranking/i, level: 1});
       expect(title).toBeInTheDocument();
