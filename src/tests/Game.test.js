@@ -3,13 +3,13 @@ import { screen } from '@testing-library/react'
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux'
 import userEvent from '@testing-library/user-event';
 import initialState from './helpers/mockResults';
-import {mockStorage} from './helpers/mockStorage';
+import { mockScores } from './helpers/mockStorage';
 
-const route = '/game';
+const gameRoute = '/game';
 
 describe('Verifica renderização da página de jogo', () => {
   beforeEach(() => {
-    renderWithRouterAndRedux(<App />, initialState, route);
+    renderWithRouterAndRedux(<App />, initialState, gameRoute);
   });
 
   test('1 - Verifica renderização do cabeçalho', () => {
@@ -29,7 +29,7 @@ describe('Verifica renderização da página de jogo', () => {
 
 describe('Verifica interação com interface do jogo', () => {
   beforeEach(() => {
-    renderWithRouterAndRedux(<App />, initialState, route);
+    renderWithRouterAndRedux(<App />, initialState, gameRoute);
   });
 
   test('1 - Verifica mudança de cores nos botões depois da resposta', () => {
@@ -101,11 +101,11 @@ describe('Verifica interação com interface do jogo', () => {
     userEvent.click(screen.getByRole('button', { name: 'Next' }));
 
     expect(screen.getByText('Well Done!')).toBeInTheDocument();
-    expect(localStorage.getItem('ranking')).toEqual(JSON.stringify([mockStorage[0]]));
+    expect(localStorage.getItem('ranking')).toEqual(JSON.stringify([mockScores[0]]));
   });
 
   test('5 - Verifica se a pontuação é somada no localStorage', async () => {
-    expect(localStorage.getItem('ranking')).toEqual(JSON.stringify([mockStorage[0]]));
+    expect(localStorage.getItem('ranking')).toEqual(JSON.stringify([mockScores[0]]));
 
     userEvent.click(await screen.findByRole('button', { name: 'Think' }));
     userEvent.click(screen.getByRole('button', { name: 'Next' }));
@@ -123,13 +123,13 @@ describe('Verifica interação com interface do jogo', () => {
     userEvent.click(screen.getByRole('button', { name: 'Next' }));
 
     expect(screen.getByText('Well Done!')).toBeInTheDocument();
-    expect(localStorage.getItem('ranking')).toEqual(JSON.stringify([...mockStorage]));
+    expect(localStorage.getItem('ranking')).toEqual(JSON.stringify([...mockScores]));
   });
 });
 
 describe('Verifica se o timer funciona', () => {
   beforeEach(() => {
-    renderWithRouterAndRedux(<App />, initialState, route);
+    renderWithRouterAndRedux(<App />, initialState, gameRoute);
   });
 
   test('1 - Verifica se existe um timer', () => {

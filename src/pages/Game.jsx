@@ -13,7 +13,7 @@ class Game extends Component {
       index: 0,
       allAnswers: [],
       milliseconds: 30,
-      selectedAnswer: false,
+      isSelected: false,
       correctAnswer: '',
       scorePlayer: 0,
     };
@@ -71,7 +71,7 @@ class Game extends Component {
     return index === correctAnswer ? 'correct' : 'wrong';
   };
 
-  toggleSelected = () => this.setState({ selectedAnswer: true });
+  toggleSelected = () => this.setState({ isSelected: true });
 
   setDifficulty = () => {
     const { index } = this.state;
@@ -120,7 +120,7 @@ class Game extends Component {
     const FOUR = 4;
     this.setState({
       index: index + 1,
-      selectedAnswer: false,
+      isSelected: false,
       milliseconds: 30,
     }, () => this.shuffleAnswers());
     if (index === FOUR) {
@@ -141,7 +141,7 @@ class Game extends Component {
 
   render() {
     const { resultApi } = this.props;
-    const { index, allAnswers, selectedAnswer, milliseconds, scorePlayer } = this.state;
+    const { index, allAnswers, isSelected, milliseconds, scorePlayer } = this.state;
 
     return (
       <div>
@@ -169,7 +169,7 @@ class Game extends Component {
                 <button
                   data-testid={ this.setTestId(answer, i) }
                   key={ i }
-                  className={ selectedAnswer ? this.setColor(answer) : undefined }
+                  className={ isSelected ? this.setColor(answer) : undefined }
                   onClick={ () => this.handleClick(this.setColor(answer)) }
                   type="button"
                   disabled={ milliseconds <= 0 }
@@ -179,7 +179,7 @@ class Game extends Component {
             )}
         </div>
         {
-          selectedAnswer
+          isSelected
           && (
             <button
               type="button"

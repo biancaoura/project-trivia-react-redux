@@ -3,7 +3,7 @@ import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 import App from '../App';
 import { screen } from '@testing-library/react';
 import userEvent from "@testing-library/user-event";
-import { mockStorage, bino } from './helpers/mockStorage';
+import { mockScores, mockPlayer3 } from './helpers/mockStorage';
 
 import initialState from './helpers/mockResults';
 
@@ -32,21 +32,18 @@ describe('Testa a página de Ranking da aplicação', () => {
 });
 
   test('a', () => {
-    localStorage.setItem('ranking', JSON.stringify(mockStorage));
-    const { history } = renderWithRouterAndRedux(<App />);
+    localStorage.setItem('ranking', JSON.stringify(mockScores));
+    renderWithRouterAndRedux(<App />);
 
-    expect(localStorage.getItem('ranking')).toEqual(JSON.stringify(mockStorage));
+    expect(localStorage.getItem('ranking')).toEqual(JSON.stringify(mockScores));
   });
 
   test('Teste', () => {
       const test = JSON.parse(localStorage.getItem('ranking'));
-
-      console.log(test);
-      test.push(bino);
+      test.push(mockPlayer3);
       localStorage.setItem('ranking', JSON.stringify(test));
-      console.log(test);
 
-      const { history } = renderWithRouterAndRedux(<App />);
-      expect(localStorage.getItem('ranking')).toEqual(JSON.stringify([...mockStorage, bino]));
+      renderWithRouterAndRedux(<App />);
+      expect(localStorage.getItem('ranking')).toEqual(JSON.stringify([...mockScores, mockPlayer3]));
 
   });
