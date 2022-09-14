@@ -1,0 +1,121 @@
+.game-main {
+  height: 450px;
+  margin-top: 150px;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  flex-direction: row;
+  gap: 80px;
+}
+
+.category {
+  width: 413px;
+  min-height: 45px;
+  top: 275px;
+  background: #233D33;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.12em;
+  justify-content: center;
+}
+
+.question-section {
+  height: 386px;
+  margin-left: 280px;
+  background: #FFFFFF;
+  box-shadow: 1px 4px 13px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.question-text {
+  min-height: 50px;
+  width: 413px;
+  left: 114px;
+  font-family: 'Epilogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 150%;
+  color: #000000;
+}
+
+.question-category {
+  font-family: 'Epilogue';
+  font-style: normal;
+  font-weight: 1000;
+  font-size: 18px;
+  line-height: 24px;
+  color: #FFFFFF;
+}
+
+.rt-game-info {
+  display: flex;
+  justify-content: space-around;
+  width: 413px;
+  height: 38px;
+  left: 114px;
+  top: 545px;
+  font-family: 'Verdana';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 150%;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.12em;
+  color: #EA5D5D;
+}
+
+div .answer-option {
+  width: 60%;
+}
+
+.answer-option {
+  box-sizing: border-box;
+  height: 64px;
+  margin: 10px;
+  background: #FFFFFF;
+  border: 1px solid #FFFFFF;
+  border-radius: 100px;
+}
+
+.answer-option:hover {
+    border: 5px solid #582E83;
+}
+
+.correct {
+  border: 3px solid rgb(6, 240, 15);
+}
+
+.wrong {
+  border: 3px solid red;
+}
+
+.game-buttons {
+  width: 50%;
+  height: 100%;
+  margin-top: 30px;
+}
+
+.next-question {
+  width: 58%;
+  height: 45px;
+  left: 661px;
+  top: 575px;
+  margin-top: 30px;
+  border-radius: 10px;
+  margin-left: 20px;
+  background: #582E83;
+  color: white;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}

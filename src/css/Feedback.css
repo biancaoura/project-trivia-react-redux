@@ -1,0 +1,37 @@
+.feedback-btn {
+  background-color: #4f185a;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  height: 40px;
+  justify-content: center;
+  left: 407px;
+  margin: 6px;
+  top: 598px;
+  width: 20%;
+}
+
+.feedback-btn:hover {
+  background-color: #380841;
+}
+
+.match-info {
+  background-color: white;
+  width: 300px;
+  margin: 20px 0px 20px;
+  height: 200px;
+  text-align: center;
+  border-radius: 10px;
+  padding-top: 50px;
+}
+
+span {
+  font-size: 20px;
+}
+
+.trivia-logo-feedback {
+  height: 150px;
+  margin-bottom: -60px;
+  z-index: 1;
+}

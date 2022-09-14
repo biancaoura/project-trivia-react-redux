@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { func, number, shape } from 'prop-types';
 import Header from '../components/Header';
+import '../css/Feedback.css';
+import triviaLogo from '../css/images/logo trivia.png';
 
 class Feedback extends Component {
   checkAnswer = () => {
@@ -25,22 +27,27 @@ class Feedback extends Component {
       <main>
         <Header />
         <p data-testid="feedback-text">{ this.checkAnswer()}</p>
-
-        <h1
-          data-testid="feedback-total-score"
-        >
-          { score }
-        </h1>
-        <h3
-          data-testid="feedback-total-question"
-        >
-          { assertions }
-        </h3>
+        <img src={ triviaLogo } alt="logo" className="trivia-logo-feedback" />
+        <div className="match-info">
+          <span>Pontuação</span>
+          <h2
+            data-testid="feedback-total-score"
+          >
+            { score }
+          </h2>
+          <span>Número de acertos</span>
+          <h2
+            data-testid="feedback-total-question"
+          >
+            { assertions }
+          </h2>
+        </div>
         <button
           type="button"
           id="play-again"
           onClick={ (e) => this.handleClick(e) }
           data-testid="btn-play-again"
+          className="feedback-btn"
         >
           Play again
         </button>
@@ -49,6 +56,7 @@ class Feedback extends Component {
           id="ranking"
           onClick={ (e) => this.handleClick(e) }
           data-testid="btn-ranking"
+          className="feedback-btn"
         >
           Ranking
         </button>

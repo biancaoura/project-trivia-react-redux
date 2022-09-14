@@ -33,6 +33,7 @@ describe('Verifica interação com interface do jogo', () => {
   });
 
   test('1 - Verifica mudança de cores nos botões depois da resposta', () => {
+    renderWithRouterAndRedux(<App />, initialState, route);
     userEvent.click(screen.getByRole('button', { name: 'Think' }));
     expect(screen.getByRole('button', { name: 'Think' }).className).toContain('correct');
     expect(screen.getByRole('button', { name: 'Click' }).className).toContain('wrong');

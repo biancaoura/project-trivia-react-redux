@@ -4,7 +4,8 @@ import { arrayOf, func, shape } from 'prop-types';
 import md5 from 'crypto-js/md5';
 import Header from '../components/Header';
 import { actionScorePlayer, increaseCorrect } from '../redux/actions';
-import '../App.css';
+// import '../App.css';
+import '../css/Game.css';
 
 class Game extends Component {
   constructor() {
@@ -141,6 +142,12 @@ class Game extends Component {
     }
   };
 
+  decodeEntity = (inputStr) => {
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = inputStr;
+    return textarea.value;
+  };
+
   render() {
     const { resultApi } = this.props;
     const { index, allAnswers, selectedAnswer, secondTimer, scorePlayer } = this.state;
@@ -148,50 +155,66 @@ class Game extends Component {
     return (
       <div>
         <Header />
-        <p data-testid="question-category">
-          {resultApi[index].category}
-        </p>
+        <main className="game-main">
 
-        <div data-testid="timer">
-          { secondTimer }
-        </div>
+          <section className="question-section">
 
-        <div data-testid="score">
-          { scorePlayer }
-        </div>
+            <section className="category">
+              <p className="question-category" data-testid="question-category">
+                {resultApi[index].category}
+              </p>
+            </section>
 
-        <p data-testid="question-text">
-          {resultApi[index].question}
+            <p className="question-text" data-testid="question-text">
+              { this.decodeEntity(resultApi[index].question) }
+            </p>
 
-        </p>
-        <div data-testid="answer-options">
-          {allAnswers
-            .map(
-              (v, i) => (
-                <button
-                  data-testid={ this.setTestId(v, i) }
-                  key={ i }
-                  className={ selectedAnswer ? this.setColor(v) : undefined }
-                  onClick={ () => this.handleClick(this.setColor(v)) }
-                  type="button"
-                  disabled={ secondTimer <= 0 }
-                >
-                  {v}
-                </button>),
-            )}
-        </div>
-        {
-          selectedAnswer
+            <section className="rt-game-info">
+              <div data-testid="timer">
+                { secondTimer }
+              </div>
+
+              <div data-testid="score">
+                { scorePlayer }
+              </div>
+            </section>
+
+          </section>
+
+          <div className="game-buttons">
+            <div className="answers" data-testid="answer-options">
+              {allAnswers
+                .map(
+                  (v, i) => (
+                    <button
+                      data-testid={ this.setTestId(v, i) }
+                      key={ i }
+                      className={ `${selectedAnswer ? this.setColor(v) : undefined}
+                     answer-option` }
+                      onClick={ () => this.handleClick(this.setColor(v)) }
+                      type="button"
+                      disabled={ secondTimer <= 0 }
+                    >
+                      { this.decodeEntity(v)}
+                    </button>),
+                )}
+            </div>
+            {
+              selectedAnswer
           && (
             <button
               type="button"
               data-testid="btn-next"
               onClick={ this.nextQuestion }
+              className="next-question"
             >
               Next
             </button>
           )
-        }
+            }
+          </div>
+
+        </main>
       </div>
     );
   }
