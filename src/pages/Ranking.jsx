@@ -11,7 +11,6 @@ export default class Ranking extends Component {
 
   componentDidMount() {
     const ranking = JSON.parse(localStorage.getItem('ranking'));
-    // const MINUS_ONE = -1;
     const sortedRanking = ranking === null
       ? [] : ranking.sort((a, b) => b.score - a.score);
     this.setState({ ranking: sortedRanking });

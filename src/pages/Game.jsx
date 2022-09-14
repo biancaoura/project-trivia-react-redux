@@ -124,13 +124,12 @@ class Game extends Component {
       selectedAnswer: false,
       secondTimer: 30,
     }, () => this.shuffleAnswers());
-    // this.shuffleAnswers();
     if (index === FOUR) {
       const hashedEmail = md5(gravatarEmail.email).toString();
       const url = `https://www.gravatar.com/avatar/${hashedEmail}`;
       const ranking = JSON.parse(localStorage.getItem('ranking'));
       const playerResults = { name, score: scorePlayer, picture: url };
-      // if (ranking.length > 1) {
+
       if (ranking) {
         ranking.push(playerResults);
         localStorage.setItem('ranking', JSON.stringify(ranking));

@@ -12,7 +12,6 @@ class Header extends Component {
   render() {
     const { name: { name }, gravatarEmail: { email }, score } = this.props;
     return (
-
       <header>
         <img
           src={ this.hashEmail(email) }

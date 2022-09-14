@@ -11,9 +11,6 @@ export const CORRECT_ANSWER = 'CORRECT_ANSWER';
 export const submitName = (payload) => ({ type: SUBMIT_NAME, payload });
 export const submitEmail = (payload) => ({ type: SUBMIT_EMAIL, payload });
 
-// criar action para score e assertions
-// observar como tratar a incrementação dos casos
-
 export const gravatarToken = (payload) => ({
   type: GRAVATAR_TOKEN,
   payload,

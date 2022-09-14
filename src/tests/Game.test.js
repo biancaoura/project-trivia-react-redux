@@ -101,7 +101,6 @@ describe('Verifica interação com interface do jogo', () => {
     userEvent.click(screen.getByRole('button', { name: 'Next' }));
 
     expect(screen.getByText('Well Done!')).toBeInTheDocument();
-    // console.log(JSON.stringify(mockStorage[0]));
     expect(localStorage.getItem('ranking')).toEqual(JSON.stringify([mockStorage[0]]));
   });
 
