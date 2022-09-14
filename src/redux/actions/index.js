@@ -1,4 +1,4 @@
-import { getApiTrivia } from '../../data/APITrivia';
+import { getApiTrivia } from '../../services/APITrivia';
 
 export const SUBMIT_NAME = 'SUBMIT_NAME';
 export const GRAVATAR_TOKEN = 'GRAVATAR_TOKEN';

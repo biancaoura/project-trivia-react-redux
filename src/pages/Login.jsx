@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { shape, func } from 'prop-types';
 import { submitEmail, submitName, actionApiTrivia, actionTrivia } from '../redux/actions';
-import { getApiTrivia } from '../data/APITrivia';
+import { getApiTrivia } from '../services/APITrivia';
 import '../css/login.css';
 import logoTrivia from '../img/logotrivia.png';
 
