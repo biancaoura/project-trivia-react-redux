@@ -6,6 +6,12 @@ import initialState from './helpers/mockResults';
 
 const route = '/game';
 
+const mockStorage = {
+    name: 'teste',
+    score: 280,
+    picture: 'https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e'
+  };
+
 describe('Verifica renderização da página de jogo', () => {
   beforeEach(() => {
     renderWithRouterAndRedux(<App />, initialState, route);
@@ -39,26 +45,38 @@ describe('Verifica interação com interface do jogo', () => {
     expect(screen.getByRole('button', { name: 'Pixel' }).className).toContain('wrong');
   });
 
-  test('2 - Verifica progressão da pontuação no jogo e redirecionamento para feedback', () => {
-    userEvent.click(screen.getByRole('button', { name: 'Think' }));
+  test('2 - Verifica se perguntas e respostas são renderizadas', async () => {
+    const question = await screen.findByText('What five letter word is the motto of the IBM Computer company?');
+    const correctAnswer = await screen.findByText('Think');
+    
+    expect(question).toBeInTheDocument();
+    expect(correctAnswer).toBeInTheDocument();
+    
+    userEvent.click(correctAnswer);
+    const nextBtn = screen.getByRole('button', { name: 'Next' });
+    userEvent.click(nextBtn);
+  });
+
+  test('3 - Verifica progressão da pontuação no jogo e redirecionamento para feedback', async () => {
+    userEvent.click(await screen.findByRole('button', { name: 'Think' }));
     expect(screen.getAllByText('70')).toHaveLength(2);
-    userEvent.click(screen.getByRole('button', { name: 'Next' }))
+    userEvent.click(screen.getByRole('button', { name: 'Next' }));
 
-    userEvent.click(screen.getByRole('button', { name: 'Brighton' }));
+    userEvent.click(await screen.findByRole('button', { name: 'Brighton' }));
     expect(screen.getAllByText('170')).toHaveLength(2);
-    userEvent.click(screen.getByRole('button', { name: 'Next' }))
+    userEvent.click(screen.getByRole('button', { name: 'Next' }));
 
-    userEvent.click(screen.getByRole('button', { name: '2011' }));
+    userEvent.click(await screen.findByRole('button', { name: '2011' }));
     expect(screen.getAllByText('210')).toHaveLength(2);
-    userEvent.click(screen.getByRole('button', { name: 'Next' }))
+    userEvent.click(screen.getByRole('button', { name: 'Next' }));
 
-    userEvent.click(screen.getByRole('button', { name: 'Dr.Dre' }));
+    userEvent.click(await screen.findByRole('button', { name: 'Dr.Dre' }));
     expect(screen.getAllByText('280')).toHaveLength(2);
-    userEvent.click(screen.getByRole('button', { name: 'Next' }))
+    userEvent.click(screen.getByRole('button', { name: 'Next' }));
 
-    userEvent.click(screen.getByRole('button', { name: '1 Gb/s' }));
+    userEvent.click(await screen.findByRole('button', { name: '1 Gb/s' }));
     expect(screen.getAllByText('280')).toHaveLength(2);
-    userEvent.click(screen.getByRole('button', { name: 'Next' }))
+    userEvent.click(screen.getByRole('button', { name: 'Next' }));
 
     expect(screen.getByText('Well Done!')).toBeInTheDocument();
     expect(screen.getByRole('heading', { level: 1, name: '280' })).toBeInTheDocument();
@@ -66,6 +84,51 @@ describe('Verifica interação com interface do jogo', () => {
     expect(screen.getByRole('button', { name: 'Play again' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Ranking' })).toBeInTheDocument();
 
+    localStorage.clear();
+  });
+
+  test('4 - Verifica se a pontuação é adicionada no localStorage', async () => {
+    expect(localStorage.getItem('ranking')).toBeNull();
+
+    userEvent.click(await screen.findByRole('button', { name: 'Think' }));
+    userEvent.click(screen.getByRole('button', { name: 'Next' }));
+
+    userEvent.click(await screen.findByRole('button', { name: 'Brighton' }));
+    userEvent.click(screen.getByRole('button', { name: 'Next' }));
+
+    userEvent.click(await screen.findByRole('button', { name: '2011' }));
+    userEvent.click(screen.getByRole('button', { name: 'Next' }));
+
+    userEvent.click(await screen.findByRole('button', { name: 'Dr.Dre' }));
+    userEvent.click(screen.getByRole('button', { name: 'Next' }));
+
+    userEvent.click(await screen.findByRole('button', { name: '1 Gb/s' }));
+    userEvent.click(screen.getByRole('button', { name: 'Next' }));
+
+    expect(screen.getByText('Well Done!')).toBeInTheDocument();
+    expect(localStorage.getItem('ranking')).toEqual(JSON.stringify([mockStorage]));
+  });
+
+  test('5 - Verifica se a pontuação é somada no localStorage', async () => {
+    expect(localStorage.getItem('ranking')).toEqual(JSON.stringify([mockStorage]));
+
+    userEvent.click(await screen.findByRole('button', { name: 'Think' }));
+    userEvent.click(screen.getByRole('button', { name: 'Next' }));
+
+    userEvent.click(await screen.findByRole('button', { name: 'Brighton' }));
+    userEvent.click(screen.getByRole('button', { name: 'Next' }));
+
+    userEvent.click(await screen.findByRole('button', { name: '2011' }));
+    userEvent.click(screen.getByRole('button', { name: 'Next' }));
+
+    userEvent.click(await screen.findByRole('button', { name: 'Dr.Dre' }));
+    userEvent.click(screen.getByRole('button', { name: 'Next' }));
+
+    userEvent.click(await screen.findByRole('button', { name: '1 Gb/s' }));
+    userEvent.click(screen.getByRole('button', { name: 'Next' }));
+
+    expect(screen.getByText('Well Done!')).toBeInTheDocument();
+    expect(localStorage.getItem('ranking')).toEqual(JSON.stringify([mockStorage, mockStorage]));
   });
 });
 
