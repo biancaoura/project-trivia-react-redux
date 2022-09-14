@@ -3,14 +3,9 @@ import { screen } from '@testing-library/react'
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux'
 import userEvent from '@testing-library/user-event';
 import initialState from './helpers/mockResults';
+import mockStorage from './helpers/mockStorage';
 
 const route = '/game';
-
-const mockStorage = {
-    name: 'teste',
-    score: 280,
-    picture: 'https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e'
-  };
 
 describe('Verifica renderização da página de jogo', () => {
   beforeEach(() => {

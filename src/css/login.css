@@ -1,13 +1,10 @@
 body {
   background-image: url('/src/img/background.png');
   background-repeat: no-repeat;
-  background-size: 100%;
-  height: max-content;
+  background-size: 1390px;
   left: -7px;
   overflow: hidden;
-  position: relative;
   top: 0;
-  width: max-content;
 }
 
 /* main {
