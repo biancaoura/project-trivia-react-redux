@@ -18,12 +18,12 @@
 
 .match-info {
   background-color: white;
-  width: 300px;
-  margin: 20px 0px 20px;
-  height: 200px;
-  text-align: center;
   border-radius: 10px;
+  height: 200px;
+  margin: 20px 0;
   padding-top: 50px;
+  text-align: center;
+  width: 300px;
 }
 
 span {
