@@ -5,19 +5,18 @@ const INITIAL_STATE = {
   token: '',
 };
 
-const reducerTrivia = (state = INITIAL_STATE, action) => {
-  switch (action.type) {
-  case REQUEST_API: return {
-    ...state,
-    trivia: action.APITrivia,
-    validAPI: action.validAPI,
-  };
+const reducerTrivia = (state = INITIAL_STATE, { type, trivia, token }) => {
+  switch (type) {
+  case REQUEST_API:
+    return {
+      ...state,
+      trivia,
+    };
   case GRAVATAR_TOKEN:
     return {
       ...state,
-      token: action.payload,
+      token,
     };
-
   default:
     return state;
   }

@@ -11,17 +11,15 @@ export const CORRECT_ANSWER = 'CORRECT_ANSWER';
 export const submitName = (payload) => ({ type: SUBMIT_NAME, payload });
 export const submitEmail = (payload) => ({ type: SUBMIT_EMAIL, payload });
 
-export const gravatarToken = (payload) => ({
-  type: GRAVATAR_TOKEN,
-  payload,
-});
+export const gravatarToken = (token) => ({ type: GRAVATAR_TOKEN, token });
 
 export const actionApiTrivia = () => async (dispatch) => {
   const APITrivia = await getApiTrivia();
+  const { trivia, token: { token } } = APITrivia;
 
-  dispatch({ type: REQUEST_API, APITrivia: APITrivia.trivia });
-  localStorage.setItem('token', APITrivia.token.token);
-  dispatch(gravatarToken(APITrivia.token.token));
+  dispatch({ type: REQUEST_API, trivia });
+  localStorage.setItem('token', token);
+  dispatch(gravatarToken(token));
 };
 
 export const actionTrivia = () => async (dispatch) => {
