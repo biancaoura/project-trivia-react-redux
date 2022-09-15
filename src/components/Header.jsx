@@ -15,7 +15,7 @@ class Header extends Component {
       <header>
         <img
           src={ this.hashEmail(email) }
-          alt="imagem do avatar"
+          alt="avatar"
           data-testid="header-profile-picture"
         />
         <h4 data-testid="header-player-name">{ name }</h4>
