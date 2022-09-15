@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { shape, func } from 'prop-types';
 import { submitEmail, submitName, actionApiTrivia, actionTrivia } from '../redux/actions';
-import { getApiTrivia } from '../data/APITrivia';
+import { getApiTrivia } from '../services/APITrivia';
 import '../css/login.css';
 import logoTrivia from '../img/logotrivia.png';
 
@@ -68,11 +68,9 @@ class Login extends Component {
 
     return (
       <main>
-
         <img className="img-balao" src={ logoTrivia } alt="imagem de um balão" />
-
         <form onSubmit={ this.login }>
-          <h2>Sua Vez de Jogar</h2>
+          <h2>Time to play</h2>
           <input
             type="text"
             data-testid="input-player-name"
@@ -80,7 +78,7 @@ class Login extends Component {
             onChange={ this.handleChange }
             name="name"
             value={ name }
-            placeholder="Digite seu nome"
+            placeholder="Name"
           />
           <input
             type="email"
@@ -89,7 +87,7 @@ class Login extends Component {
             onChange={ this.handleChange }
             name="email"
             value={ email }
-            placeholder="Digite seu email"
+            placeholder="Email"
           />
           <button
             type="submit"
@@ -105,7 +103,7 @@ class Login extends Component {
             className="buttons unbelievable"
             onClick={ this.handleClick }
           >
-            Configurações
+            Settings
           </button>
         </form>
       </main>

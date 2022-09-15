@@ -1,4 +1,4 @@
-import { getApiTrivia } from '../../data/APITrivia';
+import { getApiTrivia } from '../../services/APITrivia';
 
 export const SUBMIT_NAME = 'SUBMIT_NAME';
 export const GRAVATAR_TOKEN = 'GRAVATAR_TOKEN';
@@ -10,9 +10,6 @@ export const CORRECT_ANSWER = 'CORRECT_ANSWER';
 
 export const submitName = (payload) => ({ type: SUBMIT_NAME, payload });
 export const submitEmail = (payload) => ({ type: SUBMIT_EMAIL, payload });
-
-// criar action para score e assertions
-// observar como tratar a incrementação dos casos
 
 export const gravatarToken = (payload) => ({
   type: GRAVATAR_TOKEN,

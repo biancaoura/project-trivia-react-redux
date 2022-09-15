@@ -4,7 +4,6 @@ import { arrayOf, func, shape } from 'prop-types';
 import md5 from 'crypto-js/md5';
 import Header from '../components/Header';
 import { actionScorePlayer, increaseCorrect } from '../redux/actions';
-// import '../App.css';
 import '../css/Game.css';
 
 class Game extends Component {
@@ -13,8 +12,8 @@ class Game extends Component {
     this.state = {
       index: 0,
       allAnswers: [],
-      secondTimer: 30,
-      selectedAnswer: false,
+      milliseconds: 30,
+      isSelected: false,
       correctAnswer: '',
       scorePlayer: 0,
     };
@@ -52,18 +51,18 @@ class Game extends Component {
     }
   };
 
-  setTestId = (v, i) => {
+  setTestId = (answer, i) => {
     const { resultApi } = this.props;
     const { index } = this.state;
 
     const correctAnswer = resultApi[index].correct_answer;
-    return v === correctAnswer ? 'correct-answer' : `wrong-answer-${i}`;
+    return answer === correctAnswer ? 'correct-answer' : `wrong-answer-${i}`;
   };
 
   setTimer = () => {
     const ONE_SECOND = 1000;
     setInterval(() => {
-      this.setState((prevState) => ({ secondTimer: prevState.secondTimer - 1 }));
+      this.setState((prevState) => ({ milliseconds: prevState.milliseconds - 1 }));
     }, ONE_SECOND);
   };
 
@@ -72,7 +71,7 @@ class Game extends Component {
     return index === correctAnswer ? 'correct' : 'wrong';
   };
 
-  toggleSelected = () => this.setState({ selectedAnswer: true });
+  toggleSelected = () => this.setState({ isSelected: true });
 
   setDifficulty = () => {
     const { index } = this.state;
@@ -87,12 +86,11 @@ class Game extends Component {
     } else {
       difficulty += THREE;
     }
-
     return difficulty;
   };
 
   setScore = (className) => {
-    const { secondTimer } = this.state;
+    const { milliseconds } = this.state;
     const { dispatch } = this.props;
 
     const TEN = 10;
@@ -102,7 +100,7 @@ class Game extends Component {
     let assertions = 0;
 
     if (className === 'correct') {
-      (scores += TEN + (secondTimer * difficulty));
+      (scores += TEN + (milliseconds * difficulty));
       assertions += 1;
     }
 
@@ -122,16 +120,15 @@ class Game extends Component {
     const FOUR = 4;
     this.setState({
       index: index + 1,
-      selectedAnswer: false,
-      secondTimer: 30,
+      isSelected: false,
+      milliseconds: 30,
     }, () => this.shuffleAnswers());
-    // this.shuffleAnswers();
     if (index === FOUR) {
       const hashedEmail = md5(gravatarEmail.email).toString();
       const url = `https://www.gravatar.com/avatar/${hashedEmail}`;
       const ranking = JSON.parse(localStorage.getItem('ranking'));
       const playerResults = { name, score: scorePlayer, picture: url };
-      // if (ranking.length > 1) {
+
       if (ranking) {
         ranking.push(playerResults);
         localStorage.setItem('ranking', JSON.stringify(ranking));
@@ -150,7 +147,7 @@ class Game extends Component {
 
   render() {
     const { resultApi } = this.props;
-    const { index, allAnswers, selectedAnswer, secondTimer, scorePlayer } = this.state;
+    const { index, allAnswers, isSelected, milliseconds, scorePlayer } = this.state;
 
     return (
       <div>
@@ -171,7 +168,7 @@ class Game extends Component {
 
             <section className="rt-game-info">
               <div data-testid="timer">
-                { secondTimer }
+                { milliseconds }
               </div>
 
               <div data-testid="score">
@@ -185,22 +182,22 @@ class Game extends Component {
             <div className="answers" data-testid="answer-options">
               {allAnswers
                 .map(
-                  (v, i) => (
+                  (answer, i) => (
                     <button
-                      data-testid={ this.setTestId(v, i) }
+                      data-testid={ this.setTestId(answer, i) }
                       key={ i }
-                      className={ `${selectedAnswer ? this.setColor(v) : undefined}
+                      className={ `${isSelected ? this.setColor(answer) : undefined}
                      answer-option` }
-                      onClick={ () => this.handleClick(this.setColor(v)) }
+                      onClick={ () => this.handleClick(this.setColor(answer)) }
                       type="button"
-                      disabled={ secondTimer <= 0 }
+                      disabled={ milliseconds <= 0 }
                     >
-                      { this.decodeEntity(v)}
+                      { this.decodeEntity(answer)}
                     </button>),
                 )}
             </div>
             {
-              selectedAnswer
+              isSelected
           && (
             <button
               type="button"

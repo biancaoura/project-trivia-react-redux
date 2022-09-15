@@ -14,10 +14,10 @@ class Feedback extends Component {
     return 'Well Done!';
   };
 
-  handleClick = (e) => {
+  handleClick = ({ target: { id } }) => {
     const { history: { push } } = this.props;
 
-    if (e.target.id === 'play-again') push('/');
+    if (id === 'play-again') push('/');
     else push('/ranking');
   };
 
@@ -26,19 +26,15 @@ class Feedback extends Component {
     return (
       <main>
         <Header />
-        <p data-testid="feedback-text">{ this.checkAnswer()}</p>
+        <h4 data-testid="feedback-text">{ this.checkAnswer()}</h4>
         <img src={ triviaLogo } alt="logo" className="trivia-logo-feedback" />
         <div className="match-info">
-          <span>Pontuação</span>
-          <h2
-            data-testid="feedback-total-score"
-          >
+          <span>Score</span>
+          <h2 data-testid="feedback-total-score">
             { score }
           </h2>
-          <span>Número de acertos</span>
-          <h2
-            data-testid="feedback-total-question"
-          >
+          <span>Correct answers</span>
+          <h2 data-testid="feedback-total-question">
             { assertions }
           </h2>
         </div>

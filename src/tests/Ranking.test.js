@@ -1,52 +1,31 @@
-import React from "react";
-import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
-import App from '../App';
+import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from "@testing-library/user-event";
-import { mockStorage, bino } from './helpers/mockStorage';
-
+import App from '../App';
+import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 import initialState from './helpers/mockResults';
 
-describe('Testa a página de Ranking da aplicação', () => {
-  test('Testa se o botão é renderizado', () => {
-    const { history } = renderWithRouterAndRedux(<App />);
-    history.push('/ranking');
+const rankingRoute = '/ranking';
 
-    const btn_go_home = screen.getByTestId('btn-go-home');
-
-    expect(btn_go_home).toBeInTheDocument();
+describe('Testa a página de ranking', () => {
+  let renderHistory;
+  beforeEach(() => {
+    const { history } = renderWithRouterAndRedux(<App />, initialState, rankingRoute);
+    renderHistory = history;
   });
 
-  test('Testa se ao clicar no botão a pagina é redirecionada para a home', () => {    
-    const { history } = renderWithRouterAndRedux(<App />, initialState );
-    history.push('/ranking');
+  test('1 - Testa se o botão é renderizado', () => {
+    const homeBtn = screen.getByRole('button', { name: /home/i });
+    expect(homeBtn).toBeInTheDocument();
+  });
 
-    const btn_go_home = screen.getByTestId('btn-go-home');
-    expect(btn_go_home).toBeInTheDocument();
+  test('2 - Testa se ao clicar no botão a pagina é redirecionada para a home', () => {    
+    const homeBtn = screen.getByRole('button', { name: /home/i });
+    expect(homeBtn).toBeInTheDocument();
 
-    userEvent.click(btn_go_home)
+    userEvent.click(homeBtn);
 
-    const { pathname } = history.location
-    expect(pathname).toBe('/')
+    const { location: { pathname } } = renderHistory;
+    expect(pathname).toBe('/');
+  });
 });
-});
-
-  test('a', () => {
-    localStorage.setItem('ranking', JSON.stringify(mockStorage));
-    const { history } = renderWithRouterAndRedux(<App />);
-
-    expect(localStorage.getItem('ranking')).toEqual(JSON.stringify(mockStorage));
-  });
-
-  test('Teste', () => {
-      const test = JSON.parse(localStorage.getItem('ranking'));
-
-      console.log(test);
-      test.push(bino);
-      localStorage.setItem('ranking', JSON.stringify(test));
-      console.log(test);
-
-      const { history } = renderWithRouterAndRedux(<App />);
-      expect(localStorage.getItem('ranking')).toEqual(JSON.stringify([...mockStorage, bino]));
-
-  });

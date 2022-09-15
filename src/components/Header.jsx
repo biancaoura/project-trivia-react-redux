@@ -14,20 +14,22 @@ class Header extends Component {
   render() {
     const { name: { name }, gravatarEmail: { email }, score } = this.props;
     return (
-
       <header>
         <img className="trivia-img" src={ triviaLogo } alt="trivia logo" />
         <div>
           <div className="player-info">
             <img
               src={ this.hashEmail(email) }
-              alt="imagem do avatar"
+              alt="avatar"
               data-testid="header-profile-picture"
               className="user-image"
             />
             <h4 data-testid="header-player-name">{ name }</h4>
           </div>
-          <p className="score" data-testid="header-score">{ score }</p>
+          <h4>
+            Score:
+            <span className="score" data-testid="header-score">{ score }</span>
+          </h4>
         </div>
       </header>
     );
