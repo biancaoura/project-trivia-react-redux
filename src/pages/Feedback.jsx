@@ -26,14 +26,10 @@ class Feedback extends Component {
         <Header />
         <p data-testid="feedback-text">{ this.checkAnswer()}</p>
 
-        <h1
-          data-testid="feedback-total-score"
-        >
+        <h1 data-testid="feedback-total-score">
           { score }
         </h1>
-        <h3
-          data-testid="feedback-total-question"
-        >
+        <h3 data-testid="feedback-total-question">
           { assertions }
         </h3>
         <button

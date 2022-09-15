@@ -10,10 +10,9 @@ export default class Ranking extends Component {
   }
 
   componentDidMount() {
-    const ranking = JSON.parse(localStorage.getItem('ranking'));
-    const sortedRanking = ranking === null
-      ? [] : ranking.sort((a, b) => b.score - a.score);
-    this.setState({ ranking: sortedRanking });
+    const rankStorage = JSON.parse(localStorage.getItem('ranking'));
+    const ranking = rankStorage ? rankStorage.sort((a, b) => b.score - a.score) : [];
+    this.setState({ ranking });
   }
 
   handleClick = () => {
