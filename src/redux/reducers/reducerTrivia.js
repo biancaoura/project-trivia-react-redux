@@ -1,4 +1,4 @@
-import { REQUEST_API, GRAVATAR_TOKEN } from '../actions';
+import { REQUEST_API } from '../actions';
 
 const INITIAL_STATE = {
   trivia: {},
@@ -11,10 +11,6 @@ const reducerTrivia = (state = INITIAL_STATE, { type, trivia, token }) => {
     return {
       ...state,
       trivia,
-    };
-  case GRAVATAR_TOKEN:
-    return {
-      ...state,
       token,
     };
   default:
