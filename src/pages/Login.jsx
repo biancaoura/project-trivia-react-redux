@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { shape, func } from 'prop-types';
-import { submitEmail, submitName, actionApiTrivia, actionTrivia } from '../redux/actions';
+import { submitEmail, submitName, actionApiTrivia } from '../redux/actions';
 import { getApiTrivia } from '../services/APITrivia';
 import '../css/login.css';
 import logoTrivia from '../img/logotrivia.png';
@@ -43,13 +43,12 @@ class Login extends Component {
     event.preventDefault();
     const { name, email } = this.state;
     const {
-      history: { push }, dispatchName, dispatchAPITrivia, dispatchEmail, dispatchTrivia,
+      history: { push }, dispatchName, dispatchAPITrivia, dispatchEmail,
     } = this.props;
 
     const APITrivia = await getApiTrivia();
     const validAPI = APITrivia.trivia.response_code;
 
-    await dispatchTrivia();
     await dispatchAPITrivia();
 
     dispatchName(name);
@@ -113,14 +112,12 @@ class Login extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchTrivia: () => dispatch(actionTrivia()),
   dispatchAPITrivia: () => dispatch(actionApiTrivia()),
   dispatchName: (name) => dispatch(submitName(name)),
   dispatchEmail: (email) => dispatch(submitEmail(email)),
 });
 
 Login.propTypes = {
-  dispatchTrivia: func.isRequired,
   history: shape(),
   dispatchName: func.isRequired,
   dispatchEmail: func.isRequired,

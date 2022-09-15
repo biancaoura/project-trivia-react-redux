@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { arrayOf, func, shape } from 'prop-types';
+import { func, shape } from 'prop-types';
 import md5 from 'crypto-js/md5';
 import Header from '../components/Header';
 import { actionScorePlayer, increaseCorrect } from '../redux/actions';
@@ -15,7 +15,7 @@ class Game extends Component {
       milliseconds: 30,
       isSelected: false,
       correctAnswer: '',
-      scorePlayer: 0,
+      score: 0,
     };
   }
 
@@ -25,15 +25,13 @@ class Game extends Component {
   }
 
   shuffleAnswers = async () => {
-    const { resultApi } = this.props;
+    const { reducerTrivia: { trivia: { results } } } = this.props;
     const { index } = this.state;
 
-    const apiReturn = await resultApi[index];
+    const apiReturn = await results[index];
 
     const wrongAnswers = apiReturn.incorrect_answers.map((v) => v);
-
     const correctAnswer = apiReturn.correct_answer;
-
     const allAnswers = [...wrongAnswers, correctAnswer];
 
     this.setState({ correctAnswer });
@@ -52,10 +50,10 @@ class Game extends Component {
   };
 
   setTestId = (answer, i) => {
-    const { resultApi } = this.props;
+    const { reducerTrivia: { trivia: { results } } } = this.props;
     const { index } = this.state;
 
-    const correctAnswer = resultApi[index].correct_answer;
+    const correctAnswer = results[index].correct_answer;
     return answer === correctAnswer ? 'correct-answer' : `wrong-answer-${i}`;
   };
 
@@ -75,13 +73,13 @@ class Game extends Component {
 
   setDifficulty = () => {
     const { index } = this.state;
-    const { resultApi } = this.props;
+    const { reducerTrivia: { trivia: { results } } } = this.props;
     const THREE = 3;
 
     let difficulty = 0;
-    if (resultApi[index].difficulty === 'easy') {
+    if (results[index].difficulty === 'easy') {
       difficulty += 1;
-    } else if (resultApi[index].difficulty === 'medium') {
+    } else if (results[index].difficulty === 'medium') {
       difficulty += 2;
     } else {
       difficulty += THREE;
@@ -96,16 +94,16 @@ class Game extends Component {
     const TEN = 10;
     const difficulty = this.setDifficulty();
 
-    let scores = 0;
+    let sumScore = 0;
     let assertions = 0;
 
     if (className === 'correct') {
-      (scores += TEN + (milliseconds * difficulty));
+      (sumScore += TEN + (milliseconds * difficulty));
       assertions += 1;
     }
 
-    this.setState((prevState) => ({ scorePlayer: prevState.scorePlayer + scores }));
-    dispatch(actionScorePlayer(scores));
+    this.setState((prevState) => ({ score: prevState.score + sumScore }));
+    dispatch(actionScorePlayer(sumScore));
     dispatch(increaseCorrect(assertions));
   };
 
@@ -115,8 +113,9 @@ class Game extends Component {
   };
 
   nextQuestion = () => {
-    const { index, scorePlayer } = this.state;
-    const { history, name: { name }, gravatarEmail } = this.props;
+    const { index, score } = this.state;
+    const { history, player: { email, name } } = this.props;
+
     const FOUR = 4;
     this.setState({
       index: index + 1,
@@ -124,10 +123,10 @@ class Game extends Component {
       milliseconds: 30,
     }, () => this.shuffleAnswers());
     if (index === FOUR) {
-      const hashedEmail = md5(gravatarEmail.email).toString();
+      const hashedEmail = md5(email).toString();
       const url = `https://www.gravatar.com/avatar/${hashedEmail}`;
       const ranking = JSON.parse(localStorage.getItem('ranking'));
-      const playerResults = { name, score: scorePlayer, picture: url };
+      const playerResults = { name, score, picture: url };
 
       if (ranking) {
         ranking.push(playerResults);
@@ -146,8 +145,8 @@ class Game extends Component {
   };
 
   render() {
-    const { resultApi } = this.props;
-    const { index, allAnswers, isSelected, milliseconds, scorePlayer } = this.state;
+    const { reducerTrivia: { trivia: { results } } } = this.props;
+    const { index, allAnswers, isSelected, milliseconds, score } = this.state;
 
     return (
       <div>
@@ -158,12 +157,12 @@ class Game extends Component {
 
             <section className="category">
               <p className="question-category" data-testid="question-category">
-                {resultApi[index].category}
+                {results[index].category}
               </p>
             </section>
 
             <p className="question-text" data-testid="question-text">
-              { this.decodeEntity(resultApi[index].question) }
+              { this.decodeEntity(results[index].question) }
             </p>
 
             <section className="rt-game-info">
@@ -172,15 +171,14 @@ class Game extends Component {
               </div>
 
               <div data-testid="score">
-                { scorePlayer }
+                { score }
               </div>
             </section>
-
           </section>
 
           <div className="game-buttons">
             <div className="answers" data-testid="answer-options">
-              {allAnswers
+              { allAnswers
                 .map(
                   (answer, i) => (
                     <button
@@ -194,45 +192,35 @@ class Game extends Component {
                     >
                       { this.decodeEntity(answer)}
                     </button>),
-                )}
+                ) }
             </div>
             {
               isSelected
-          && (
-            <button
-              type="button"
-              data-testid="btn-next"
-              onClick={ this.nextQuestion }
-              className="next-question"
-            >
-              Next
-            </button>
-          )
+              && (
+                <button
+                  type="button"
+                  data-testid="btn-next"
+                  onClick={ this.nextQuestion }
+                  className="next-question"
+                >
+                  Next
+                </button>
+              )
             }
           </div>
-
         </main>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  resultApi: state.reducerTrivia.trivia.results,
-  name: state.name,
-  gravatarEmail: state,
-});
+const mapStateToProps = (state) => ({ ...state });
 
 Game.propTypes = {
-  resultApi: arrayOf(shape()),
+  reducerTrivia: shape().isRequired,
   dispatch: func.isRequired,
   history: shape().isRequired,
-  name: shape().isRequired,
-  gravatarEmail: shape().isRequired,
-};
-
-Game.defaultProps = {
-  resultApi: [],
+  player: shape().isRequired,
 };
 
 export default connect(mapStateToProps)(Game);
