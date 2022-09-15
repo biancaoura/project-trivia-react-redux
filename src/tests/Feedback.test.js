@@ -24,8 +24,7 @@ describe('Testa a página de feedback', () => {
       const playerName = screen.getByRole('heading', { level: 4, name: /teste/i });
       const headerScore = screen.getByRole('heading', { level: 4, name: /score: 0/i });
       const feedbackText = screen.getByRole('heading', { level: 4, name: /could be better.../i });
-      const totalScore = screen.getByRole('heading', { level: 1, name: '0' });
-      const totalQuestion = screen.getByRole('heading', { level: 3, name: '0' });
+      const totalScore = screen.getAllByRole('heading', { level: 2, name: '0' });
       const playAgainBtn = screen.getByRole('button', { name: /play again/i });
       const rankingBtn = screen.getByRole('button', { name: /ranking/i });
 
@@ -34,8 +33,7 @@ describe('Testa a página de feedback', () => {
         playerName,
         headerScore,
         feedbackText,
-        totalScore,
-        totalQuestion,
+        ...totalScore,
         playAgainBtn,
         rankingBtn,
       ];

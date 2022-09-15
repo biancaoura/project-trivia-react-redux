@@ -74,8 +74,8 @@ describe('Testa a página do jogo', () => {
       userEvent.click(screen.getByRole('button', { name: /next/i }));
 
       expect(screen.getByRole('heading', { level: 4, name: /well done!/i })).toBeInTheDocument();
-      expect(screen.getByRole('heading', { level: 1, name: '280' })).toBeInTheDocument();
-      expect(screen.getByRole('heading', { level: 3, name: '4' })).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 2, name: '280' })).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 2, name: '4' })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: /play again/i })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: /ranking/i })).toBeInTheDocument();
 
