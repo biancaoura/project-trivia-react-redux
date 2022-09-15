@@ -13,6 +13,7 @@ describe('Testa a página de login', () => {
       const { history } = renderWithRouterAndRedux(<App />);
       renderHistory = history;
     });
+
     test('1 - Testa se a página de login é renderizada corretamente na rota "/"', () => {
       const { location: { pathname } } = renderHistory;
       expect(pathname).toBe('/');
@@ -24,15 +25,15 @@ describe('Testa a página de login', () => {
     });
 
     test('3 - Testa se a página contém inputs para inserção do nome e email', () => {
-      const inputName = screen.getByTestId('input-player-name');
-      const inputEmail = screen.getByTestId('input-gravatar-email');
+      const inputName = screen.getByPlaceholderText(/name/i);
+      const inputEmail = screen.getByPlaceholderText(/email/i);
       
       expect(inputName).toBeInTheDocument();
       expect(inputEmail).toBeInTheDocument();
     });
 
     test('4 - Testa o redirecionamento do botão Settings', () => {
-      const settingsButton = screen.getByTestId('btn-settings');
+      const settingsButton = screen.getByRole('button', { name: /settings/i });
       userEvent.click(settingsButton);
 
       const { location: { pathname } } = renderHistory;
@@ -40,17 +41,17 @@ describe('Testa a página de login', () => {
     });
 
     test('5 - Testa se o botão Play está desabilitado, e se o formulário for preenchido, ele é habilitado', () => {
-      const inputName = screen.getByTestId('input-player-name');
-      const inputEmail = screen.getByTestId('input-gravatar-email');
-      const loginButton = screen.getByTestId('btn-play');
+      const inputName = screen.getByPlaceholderText(/name/i);
+      const inputEmail = screen.getByPlaceholderText(/email/i);
+      const playBtn = screen.getByRole('button', { name: /play/i});
 
-      expect(loginButton).toBeDisabled();
+      expect(playBtn).toBeDisabled();
 
       userEvent.type(inputName, 'nome');
-      expect(loginButton).toBeDisabled();
+      expect(playBtn).toBeDisabled();
 
       userEvent.type(inputEmail, 'email@email.com');
-      expect(loginButton).toBeEnabled();
+      expect(playBtn).toBeEnabled();
     });
   });
 
@@ -63,13 +64,13 @@ describe('Testa a página de login', () => {
 
       renderWithRouterAndRedux(<App />);
 
-      const inputName = screen.getByTestId('input-player-name');
-      const inputEmail = screen.getByTestId('input-gravatar-email');
-      const loginButton = screen.getByTestId('btn-play');
+      const inputName = screen.getByPlaceholderText(/name/i);
+      const inputEmail = screen.getByPlaceholderText(/email/i);
+      const playBtn = screen.getByRole('button', { name: /play/i});
 
       userEvent.type(inputName, 'nome');
       userEvent.type(inputEmail, 'email@email.com');
-      userEvent.click(loginButton);
+      userEvent.click(playBtn);
 
       expect(global.fetch).toHaveBeenCalled();
       expect(global.fetch).toHaveBeenCalledWith('https://opentdb.com/api_token.php?command=request');
@@ -87,15 +88,15 @@ describe('Testa a página de login', () => {
       const { history } = renderWithRouterAndRedux(<App />);
       jest.spyOn(history, 'push');
 
-      const inputName = screen.getByTestId('input-player-name');
-      const inputEmail = screen.getByTestId('input-gravatar-email');
-      const loginButton = screen.getByTestId('btn-play');
+      const inputName = screen.getByPlaceholderText(/name/i);
+      const inputEmail = screen.getByPlaceholderText(/email/i);
+      const playBtn = screen.getByRole('button', { name: /play/i});
           
       userEvent.type(inputName, 'nome');
       userEvent.type(inputEmail, 'email@email.com');
-      expect(loginButton).toBeEnabled();
+      expect(playBtn).toBeEnabled();
 
-      userEvent.click(loginButton);
+      userEvent.click(playBtn);
 
       await waitFor(() => {
         expect(history.push).toHaveBeenCalledWith('/game');

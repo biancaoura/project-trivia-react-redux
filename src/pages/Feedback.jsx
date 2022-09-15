@@ -24,7 +24,7 @@ class Feedback extends Component {
     return (
       <main>
         <Header />
-        <p data-testid="feedback-text">{ this.checkAnswer()}</p>
+        <h4 data-testid="feedback-text">{ this.checkAnswer()}</h4>
 
         <h1 data-testid="feedback-total-score">
           { score }

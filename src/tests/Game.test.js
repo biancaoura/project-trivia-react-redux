@@ -17,14 +17,14 @@ describe('Testa a página do jogo', () => {
     test('1 - Testa renderização do cabeçalho', () => {
       expect(screen.getByRole('img', { name: /avatar/i })).toBeInTheDocument();
       expect(screen.getByRole('heading', { level: 4, name: 'teste' })).toBeInTheDocument();
-      expect(screen.getByTestId('header-score')).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 4, name: /score: 0/i })).toBeInTheDocument();
     });
     
     test('2 - Testa renderização dos elementos da pergunta', () => {
-      expect(screen.getByTestId('question-category')).toBeInTheDocument();
-      expect(screen.getByTestId('timer')).toBeInTheDocument();
-      expect(screen.getByTestId('score')).toBeInTheDocument();
-      expect(screen.getByTestId('question-text')).toBeInTheDocument();
+      expect(screen.getByText(/science: computers/i)).toBeInTheDocument();
+      expect(screen.getByText('30')).toBeInTheDocument();
+      // expect(screen.getByText('0')).toBeInTheDocument();
+      expect(screen.getByText(/what five letter word is the motto of the IBM computer company?/i)).toBeInTheDocument();
       expect(screen.getAllByRole('button')).toHaveLength(4);
     });
   });
@@ -74,7 +74,7 @@ describe('Testa a página do jogo', () => {
       expect(screen.getAllByText('280')).toHaveLength(2);
       userEvent.click(screen.getByRole('button', { name: /next/i }));
 
-      expect(screen.getByText(/well done!/i)).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 4, name: /well done!/i })).toBeInTheDocument();
       expect(screen.getByRole('heading', { level: 1, name: '280' })).toBeInTheDocument();
       expect(screen.getByRole('heading', { level: 3, name: '4' })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: /play again/i })).toBeInTheDocument();
@@ -108,12 +108,12 @@ describe('Testa a página do jogo', () => {
 
   describe('3 - Testa se o timer funciona', () => {
     test('1 - Testa se existe um timer', () => {
-      const timer = screen.getByTestId('timer');
+      const timer = screen.getByText('30');
       expect(timer).toBeInTheDocument();
     });
 
     test('2 - Testa se é possível clicar na resposta após 5 segundos', async () => {
-      const correctAnswer = screen.getByTestId('correct-answer');
+      const correctAnswer = screen.getByRole('button', { name: /think/i });
 
       expect(correctAnswer).toBeEnabled();
 
@@ -123,7 +123,7 @@ describe('Testa a página do jogo', () => {
     }, 10000);
 
     test('3 - Testa se o botão está desabilitado após 30 segundos', async () => {
-      const correctAnswer = screen.getByTestId('correct-answer');
+      const correctAnswer = screen.getByRole('button', { name: /think/i });
       expect(correctAnswer).toBeEnabled();
 
       await new Promise(res => setTimeout(res, 32000));

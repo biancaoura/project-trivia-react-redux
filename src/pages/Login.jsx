@@ -78,7 +78,7 @@ class Login extends Component {
             onChange={ this.handleChange }
             name="name"
             value={ name }
-            placeholder="Digite seu nome"
+            placeholder="Name"
           />
           <input
             type="email"
@@ -87,7 +87,7 @@ class Login extends Component {
             onChange={ this.handleChange }
             name="email"
             value={ email }
-            placeholder="Digite seu email"
+            placeholder="Email"
           />
           <button
             type="submit"

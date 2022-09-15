@@ -4,13 +4,14 @@ import userEvent from "@testing-library/user-event";
 import App from '../App';
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 import { mockScores } from './helpers/mockStorage';
+import initialState from './helpers/mockResults';
 
 const feedbackRoute = '/feedback';
 
 describe('Testa a página de feedback', () => {
   describe('1 - Testa renderização e botões', () => {
     beforeEach(() => {
-      renderWithRouterAndRedux(<App />, {}, feedbackRoute);
+      renderWithRouterAndRedux(<App />, initialState, feedbackRoute);
       localStorage.setItem('ranking', JSON.stringify(mockScores));
     });
 
@@ -19,14 +20,14 @@ describe('Testa a página de feedback', () => {
     });
 
     test('1 - Testa se todos os itens estão na tela', () => {
-      const profilePicture = screen.getByTestId('header-profile-picture');
-      const playerName = screen.getByTestId('header-player-name');
-      const headerScore = screen.getByTestId('header-score');
-      const feedbackText = screen.getByTestId('feedback-text');
-      const totalScore = screen.getByTestId('feedback-total-score');
-      const totalQuestion = screen.getByTestId('feedback-total-question');
-      const playAgainBtn = screen.getByTestId('btn-play-again');
-      const rankingBtn = screen.getByTestId('btn-ranking');
+      const profilePicture = screen.getByRole('img', { name: /avatar/i });
+      const playerName = screen.getByRole('heading', { level: 4, name: /teste/i });
+      const headerScore = screen.getByRole('heading', { level: 4, name: /score: 0/i });
+      const feedbackText = screen.getByRole('heading', { level: 4, name: /could be better.../i });
+      const totalScore = screen.getByRole('heading', { level: 1, name: '0' });
+      const totalQuestion = screen.getByRole('heading', { level: 3, name: '0' });
+      const playAgainBtn = screen.getByRole('button', { name: /play again/i });
+      const rankingBtn = screen.getByRole('button', { name: /ranking/i });
 
       const array = [
         profilePicture,
@@ -42,14 +43,14 @@ describe('Testa a página de feedback', () => {
     });
 
     test('2 - Testa o redirecionamento do botão Play Again', () => {
-      const playAgainBtn = screen.getByTestId('btn-play-again');
+      const playAgainBtn = screen.getByRole('button', { name: /play again/i });
       userEvent.click(playAgainBtn);
 
       expect(screen.getByText(/time to play/i)).toBeInTheDocument();
     });
 
     test('3 - Testa o redirecionamento do botão Ranking', async () => {
-      const rankingBtn = screen.getByTestId('btn-ranking');
+      const rankingBtn = screen.getByRole('button', { name: /ranking/i });
       userEvent.click(rankingBtn);
 
       expect(localStorage.getItem('ranking')).toEqual(JSON.stringify(mockScores));
@@ -63,7 +64,7 @@ describe('Testa a página de feedback', () => {
     test('Testa se a mensagem "Could be better" é mostrada caso o número de acerto seja menor que 3', () => {
       renderWithRouterAndRedux(<App />, { player: { score: 0, assertions: 0 }}, feedbackRoute);
   
-      const message = screen.getByText(/could be better.../i);
+      const message = screen.getByRole('heading', { level: 4, name: /could be better.../i });
       expect(message).toBeInTheDocument();
     });
   
@@ -71,7 +72,7 @@ describe('Testa a página de feedback', () => {
       renderWithRouterAndRedux(<App />, {
         player: { score: 0, assertions: 3 }}, feedbackRoute);
   
-      const message = screen.getByText(/well done!/i);
+      const message = screen.getByRole('heading', { level: 4, name: /well done!/i });
       expect(message).toBeInTheDocument();
     });
   });

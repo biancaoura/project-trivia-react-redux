@@ -15,12 +15,12 @@ describe('Testa a página de ranking', () => {
   });
 
   test('1 - Testa se o botão é renderizado', () => {
-    const homeBtn = screen.getByTestId('btn-go-home');
+    const homeBtn = screen.getByRole('button', { name: /home/i });
     expect(homeBtn).toBeInTheDocument();
   });
 
   test('2 - Testa se ao clicar no botão a pagina é redirecionada para a home', () => {    
-    const homeBtn = screen.getByTestId('btn-go-home');
+    const homeBtn = screen.getByRole('button', { name: /home/i });
     expect(homeBtn).toBeInTheDocument();
 
     userEvent.click(homeBtn);
