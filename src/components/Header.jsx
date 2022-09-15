@@ -12,7 +12,7 @@ class Header extends Component {
   };
 
   render() {
-    const { name: { name }, gravatarEmail: { email }, score } = this.props;
+    const { userInfo: { email, name }, score } = this.props;
     return (
       <header>
         <img className="trivia-img" src={ triviaLogo } alt="trivia logo" />
@@ -42,14 +42,12 @@ const mapStateToProps = (state) => ({
 });
 
 Header.propTypes = {
-  name: shape(),
-  gravatarEmail: shape(),
+  userInfo: shape(),
   score: number,
 };
 
 Header.defaultProps = {
-  name: '',
-  gravatarEmail: '',
+  userInfo: '',
   score: 0,
 };
 

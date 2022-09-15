@@ -15,7 +15,7 @@ class Game extends Component {
       milliseconds: 30,
       isSelected: false,
       correctAnswer: '',
-      scorePlayer: 0,
+      score: 0,
     };
   }
 
@@ -96,16 +96,16 @@ class Game extends Component {
     const TEN = 10;
     const difficulty = this.setDifficulty();
 
-    let scores = 0;
+    let sumScore = 0;
     let assertions = 0;
 
     if (className === 'correct') {
-      (scores += TEN + (milliseconds * difficulty));
+      (sumScore += TEN + (milliseconds * difficulty));
       assertions += 1;
     }
 
-    this.setState((prevState) => ({ scorePlayer: prevState.scorePlayer + scores }));
-    dispatch(actionScorePlayer(scores));
+    this.setState((prevState) => ({ score: prevState.score + sumScore }));
+    dispatch(actionScorePlayer(sumScore));
     dispatch(increaseCorrect(assertions));
   };
 
@@ -115,8 +115,9 @@ class Game extends Component {
   };
 
   nextQuestion = () => {
-    const { index, scorePlayer } = this.state;
-    const { history, name: { name }, gravatarEmail } = this.props;
+    const { index, score } = this.state;
+    const { history, userInfo: { email, name } } = this.props;
+
     const FOUR = 4;
     this.setState({
       index: index + 1,
@@ -124,10 +125,10 @@ class Game extends Component {
       milliseconds: 30,
     }, () => this.shuffleAnswers());
     if (index === FOUR) {
-      const hashedEmail = md5(gravatarEmail.email).toString();
+      const hashedEmail = md5(email).toString();
       const url = `https://www.gravatar.com/avatar/${hashedEmail}`;
       const ranking = JSON.parse(localStorage.getItem('ranking'));
-      const playerResults = { name, score: scorePlayer, picture: url };
+      const playerResults = { name, score, picture: url };
 
       if (ranking) {
         ranking.push(playerResults);
@@ -147,7 +148,7 @@ class Game extends Component {
 
   render() {
     const { resultApi } = this.props;
-    const { index, allAnswers, isSelected, milliseconds, scorePlayer } = this.state;
+    const { index, allAnswers, isSelected, milliseconds, score } = this.state;
 
     return (
       <div>
@@ -172,7 +173,7 @@ class Game extends Component {
               </div>
 
               <div data-testid="score">
-                { scorePlayer }
+                { score }
               </div>
             </section>
 
@@ -219,16 +220,14 @@ class Game extends Component {
 
 const mapStateToProps = (state) => ({
   resultApi: state.reducerTrivia.trivia.results,
-  name: state.name,
-  gravatarEmail: state,
+  ...state,
 });
 
 Game.propTypes = {
   resultApi: arrayOf(shape()),
   dispatch: func.isRequired,
   history: shape().isRequired,
-  name: shape().isRequired,
-  gravatarEmail: shape().isRequired,
+  userInfo: shape().isRequired,
 };
 
 Game.defaultProps = {
