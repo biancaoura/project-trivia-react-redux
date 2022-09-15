@@ -116,7 +116,7 @@ class Game extends Component {
 
   nextQuestion = () => {
     const { index, score } = this.state;
-    const { history, userInfo: { email, name } } = this.props;
+    const { history, player: { email, name } } = this.props;
 
     const FOUR = 4;
     this.setState({
@@ -227,7 +227,7 @@ Game.propTypes = {
   resultApi: arrayOf(shape()),
   dispatch: func.isRequired,
   history: shape().isRequired,
-  userInfo: shape().isRequired,
+  player: shape().isRequired,
 };
 
 Game.defaultProps = {
