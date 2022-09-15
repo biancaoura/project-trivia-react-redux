@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { arrayOf, func, shape } from 'prop-types';
+import { func, shape } from 'prop-types';
 import md5 from 'crypto-js/md5';
 import Header from '../components/Header';
 import { actionScorePlayer, increaseCorrect } from '../redux/actions';
@@ -25,15 +25,13 @@ class Game extends Component {
   }
 
   shuffleAnswers = async () => {
-    const { resultApi } = this.props;
+    const { reducerTrivia: { trivia: { results } } } = this.props;
     const { index } = this.state;
 
-    const apiReturn = await resultApi[index];
+    const apiReturn = await results[index];
 
     const wrongAnswers = apiReturn.incorrect_answers.map((v) => v);
-
     const correctAnswer = apiReturn.correct_answer;
-
     const allAnswers = [...wrongAnswers, correctAnswer];
 
     this.setState({ correctAnswer });
@@ -52,10 +50,10 @@ class Game extends Component {
   };
 
   setTestId = (answer, i) => {
-    const { resultApi } = this.props;
+    const { reducerTrivia: { trivia: { results } } } = this.props;
     const { index } = this.state;
 
-    const correctAnswer = resultApi[index].correct_answer;
+    const correctAnswer = results[index].correct_answer;
     return answer === correctAnswer ? 'correct-answer' : `wrong-answer-${i}`;
   };
 
@@ -75,13 +73,13 @@ class Game extends Component {
 
   setDifficulty = () => {
     const { index } = this.state;
-    const { resultApi } = this.props;
+    const { reducerTrivia: { trivia: { results } } } = this.props;
     const THREE = 3;
 
     let difficulty = 0;
-    if (resultApi[index].difficulty === 'easy') {
+    if (results[index].difficulty === 'easy') {
       difficulty += 1;
-    } else if (resultApi[index].difficulty === 'medium') {
+    } else if (results[index].difficulty === 'medium') {
       difficulty += 2;
     } else {
       difficulty += THREE;
@@ -147,7 +145,7 @@ class Game extends Component {
   };
 
   render() {
-    const { resultApi } = this.props;
+    const { reducerTrivia: { trivia: { results } } } = this.props;
     const { index, allAnswers, isSelected, milliseconds, score } = this.state;
 
     return (
@@ -159,12 +157,12 @@ class Game extends Component {
 
             <section className="category">
               <p className="question-category" data-testid="question-category">
-                {resultApi[index].category}
+                {results[index].category}
               </p>
             </section>
 
             <p className="question-text" data-testid="question-text">
-              { this.decodeEntity(resultApi[index].question) }
+              { this.decodeEntity(results[index].question) }
             </p>
 
             <section className="rt-game-info">
@@ -176,12 +174,11 @@ class Game extends Component {
                 { score }
               </div>
             </section>
-
           </section>
 
           <div className="game-buttons">
             <div className="answers" data-testid="answer-options">
-              {allAnswers
+              { allAnswers
                 .map(
                   (answer, i) => (
                     <button
@@ -195,43 +192,35 @@ class Game extends Component {
                     >
                       { this.decodeEntity(answer)}
                     </button>),
-                )}
+                ) }
             </div>
             {
               isSelected
-          && (
-            <button
-              type="button"
-              data-testid="btn-next"
-              onClick={ this.nextQuestion }
-              className="next-question"
-            >
-              Next
-            </button>
-          )
+              && (
+                <button
+                  type="button"
+                  data-testid="btn-next"
+                  onClick={ this.nextQuestion }
+                  className="next-question"
+                >
+                  Next
+                </button>
+              )
             }
           </div>
-
         </main>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  resultApi: state.reducerTrivia.trivia.results,
-  ...state,
-});
+const mapStateToProps = (state) => ({ ...state });
 
 Game.propTypes = {
-  resultApi: arrayOf(shape()),
+  reducerTrivia: shape().isRequired,
   dispatch: func.isRequired,
   history: shape().isRequired,
   player: shape().isRequired,
-};
-
-Game.defaultProps = {
-  resultApi: [],
 };
 
 export default connect(mapStateToProps)(Game);
