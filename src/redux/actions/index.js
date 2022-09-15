@@ -24,10 +24,3 @@ export const actionApiTrivia = () => async (dispatch) => {
   localStorage.setItem('token', token);
   dispatch(gravatarToken(token));
 };
-
-export const actionTrivia = () => async (dispatch) => {
-  const APITrivia = await getApiTrivia();
-  const validAPI = APITrivia.trivia.response_code;
-
-  dispatch({ type: GET_TRIVIA, trivia: validAPI });
-};
