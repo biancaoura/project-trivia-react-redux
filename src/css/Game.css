@@ -38,7 +38,6 @@
 
 .question-text {
   color: black;
-  font-family: Epilogue , Helvetica , sans-serif;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
@@ -50,7 +49,6 @@
 
 .question-category {
   color: white;
-  font-family: Epilogue , Helvetica , sans-serif;
   font-size: 18px;
   font-style: normal;
   font-weight: 1000;
@@ -61,7 +59,6 @@
   align-items: center;
   color: #ea5d5d;
   display: flex;
-  font-family: Verdana , Tahoma , sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
