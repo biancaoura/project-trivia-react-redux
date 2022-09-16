@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/project-trivia-react-redux/static/css/main.f4d0c793.css",
+    "main.js": "/project-trivia-react-redux/static/js/main.4a06410c.js",
+    "static/media/25235 2.png": "/project-trivia-react-redux/static/media/25235 2.15bdb9405b6745c8f4c6.png",
+    "static/media/logo trivia.png": "/project-trivia-react-redux/static/media/logo trivia.0f06aea9e361dedc2332.png",
+    "index.html": "/project-trivia-react-redux/index.html",
+    "main.f4d0c793.css.map": "/project-trivia-react-redux/static/css/main.f4d0c793.css.map",
+    "main.4a06410c.js.map": "/project-trivia-react-redux/static/js/main.4a06410c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f4d0c793.css",
+    "static/js/main.4a06410c.js"
+  ]
+}
