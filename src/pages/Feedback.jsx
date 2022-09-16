@@ -26,34 +26,34 @@ class Feedback extends Component {
     return (
       <main>
         <Header />
-        <h4>{ this.checkAnswer()}</h4>
-        <img src={ triviaLogo } alt="logo" className="trivia-logo-feedback" />
-        <div className="match-info">
-          <span>Score</span>
-          <h2>
-            { score }
-          </h2>
-          <span>Correct answers</span>
-          <h2>
-            { assertions }
-          </h2>
+        <div className="score-container">
+          <img src={ triviaLogo } alt="logo" className="trivia-logo-feedback" />
+          <div className="match-info">
+            <h3>{ this.checkAnswer()}</h3>
+            <h4>Score</h4>
+            <p>{ score }</p>
+            <h4>Correct answers</h4>
+            <p>{ assertions }</p>
+          </div>
         </div>
-        <button
-          type="button"
-          id="play-again"
-          onClick={ (e) => this.handleClick(e) }
-          className="feedback-btn"
-        >
-          Play again
-        </button>
-        <button
-          type="button"
-          id="ranking"
-          onClick={ (e) => this.handleClick(e) }
-          className="feedback-btn"
-        >
-          Ranking
-        </button>
+        <div className="feedback-buttons-container">
+          <button
+            type="button"
+            id="play-again"
+            onClick={ (e) => this.handleClick(e) }
+            className="feedback-btn"
+          >
+            Play again
+          </button>
+          <button
+            type="button"
+            id="ranking"
+            onClick={ (e) => this.handleClick(e) }
+            className="feedback-btn"
+          >
+            Ranking
+          </button>
+        </div>
       </main>
     );
   }

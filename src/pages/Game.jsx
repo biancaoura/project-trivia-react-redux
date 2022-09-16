@@ -159,7 +159,7 @@ class Game extends Component {
 
             <section className="rt-game-info">
               <div>
-                { milliseconds }
+                { milliseconds < 0 ? 'time\'s out' : milliseconds }
               </div>
 
               <div>

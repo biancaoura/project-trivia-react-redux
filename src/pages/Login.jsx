@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { shape, func } from 'prop-types';
 import { submitEmail, submitName, actionApiTrivia } from '../redux/actions';
 import { getApiTrivia } from '../services/APITrivia';
-import '../css/login.css';
-import logoTrivia from '../img/logotrivia.png';
+import '../css/Login.css';
+import triviaLogo from '../css/images/logo trivia.png';
 
 class Login extends Component {
   constructor() {
@@ -62,9 +62,9 @@ class Login extends Component {
 
     return (
       <main>
-        <img className="img-balao" src={ logoTrivia } alt="imagem de um balão" />
+        <img className="img-balloon" src={ triviaLogo } alt="imagem de um balão" />
         <form onSubmit={ this.login }>
-          <h2>Time to play</h2>
+          <h2 className="login-title">Time to play</h2>
           <input
             type="text"
             className="inputs"

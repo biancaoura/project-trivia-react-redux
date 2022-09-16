@@ -23,8 +23,8 @@ describe('Testa a página de feedback', () => {
       const profilePicture = screen.getByRole('img', { name: /avatar/i });
       const playerName = screen.getByRole('heading', { level: 4, name: /teste/i });
       const headerScore = screen.getByRole('heading', { level: 4, name: /score: 0/i });
-      const feedbackText = screen.getByRole('heading', { level: 4, name: /could be better.../i });
-      const totalScore = screen.getAllByRole('heading', { level: 2, name: '0' });
+      const feedbackText = screen.getByRole('heading', { level: 3, name: /could be better.../i });
+      const totalScore = screen.getAllByText('0');
       const playAgainBtn = screen.getByRole('button', { name: /play again/i });
       const rankingBtn = screen.getByRole('button', { name: /ranking/i });
 
@@ -62,7 +62,7 @@ describe('Testa a página de feedback', () => {
     test('Testa se a mensagem "Could be better" é mostrada caso o número de acerto seja menor que 3', () => {
       renderWithRouterAndRedux(<App />, { player: { score: 0, assertions: 0 }}, feedbackRoute);
   
-      const message = screen.getByRole('heading', { level: 4, name: /could be better.../i });
+      const message = screen.getByRole('heading', { level: 3, name: /could be better.../i });
       expect(message).toBeInTheDocument();
     });
   
@@ -70,7 +70,7 @@ describe('Testa a página de feedback', () => {
       renderWithRouterAndRedux(<App />, {
         player: { score: 0, assertions: 3 }}, feedbackRoute);
   
-      const message = screen.getByRole('heading', { level: 4, name: /well done!/i });
+      const message = screen.getByRole('heading', { level: 3, name: /well done!/i });
       expect(message).toBeInTheDocument();
     });
   });

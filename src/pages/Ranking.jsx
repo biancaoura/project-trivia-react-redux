@@ -39,10 +39,9 @@ export default class Ranking extends Component {
                   <h6>{ position.name }</h6>
                 </div>
                 <div>
-                  <span>Score:</span>
-                  <h6
-                    className="player-ranking-score"
-                  >
+                  <h6 className="player-ranking-score">
+                    Score:
+                    {' '}
                     { position.score }
                   </h6>
                 </div>

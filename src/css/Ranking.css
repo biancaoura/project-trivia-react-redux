@@ -7,58 +7,53 @@
 
 .ranking-card {
   align-items: center;
-  background-color: aliceblue;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
   justify-content: center;
   padding: 10px;
   width: 540px;
 }
 
 .player-ranking-info {
-  border: 1px solid rgb(167, 157, 157);
+  background: rgba(255, 255, 255, 0.779);
   border-radius: 10px;
   display: flex;
-  font-size: 30px;
+  font-size: 26px;
   height: 65px;
   justify-content: space-between;
-  margin-bottom: 3px;
+  padding: 0 20px;
   width: 70%;
+
 }
 
 .player-ranking-info:hover {
-  background-color: rgb(167, 157, 157);
+  background: white;
 }
 
 .player-ranking-info div {
   align-items: center;
   display: flex;
-  gap: 5px;
-
-  /* border: red solid 1px; */
+  gap: 10px;
 }
 
 .player-ranking-image {
   border-radius: 20px;
-  height: 45px;
-
-  /* margin-left: 7px; */
+  width: 40px;
 }
 
 .player-ranking-score {
-  margin-right: 20px;
+  font-weight: 400;
 }
 
 .home-button {
-
-  /* margin-left: 45%; */
-  background-color: #4f185a;
+  background-color: #582e83;
   border: none;
   border-radius: 10px;
   color: white;
   cursor: pointer;
+  font-size: 16px;
   height: 40px;
-  width: 80%;
+  width: 25%;
 }

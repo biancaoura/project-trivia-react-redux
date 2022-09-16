@@ -10,21 +10,23 @@
 
 .category {
   align-items: center;
-  background: #233d33;
+  background: #f0c62d;
   border-radius: 100px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   display: flex;
   justify-content: center;
-  letter-spacing: 0.12em;
-  min-height: 45px;
+  letter-spacing: 0.02em;
+
+  /* min-height: 45px; */
   text-align: center;
-  top: 275px;
+
+  /* top: 275px; */
   width: 413px;
 }
 
 .question-section {
   align-items: center;
-  background: white;
+  background: rgba(255, 255, 255, 0.567);
   border-radius: 10px;
   box-shadow: 1px 4px 13px 2px rgba(0, 0, 0, 0.2);
   display: flex;
@@ -39,20 +41,25 @@
 .question-text {
   color: black;
   font-size: 20px;
-  font-style: normal;
+
+  /* font-style: normal; */
   font-weight: 400;
   left: 114px;
   line-height: 150%;
-  min-height: 50px;
-  width: 413px;
+
+  /* min-height: 50px; */
+  max-width: 413px;
 }
 
 .question-category {
-  color: white;
+
+  /* color: white; */
   font-size: 18px;
-  font-style: normal;
-  font-weight: 1000;
-  line-height: 24px;
+
+  /* font-style: normal; */
+  font-weight: 400;
+
+  /* line-height: 24px; */
 }
 
 .rt-game-info {
@@ -60,15 +67,19 @@
   color: #ea5d5d;
   display: flex;
   font-size: 16px;
-  font-style: normal;
   font-weight: 700;
-  height: 38px;
+
+  /* height: 38px; */
   justify-content: space-around;
-  left: 114px;
-  letter-spacing: 0.12em;
-  line-height: 150%;
+
+  /* left: 114px; */
+
+  /* letter-spacing: 0.12em; */
+
+  /* line-height: 150%; */
   text-align: center;
-  top: 545px;
+
+  /* top: 545px; */
   width: 413px;
 }
 
@@ -76,7 +87,8 @@
   background: white;
   border: 1px solid white;
   border-radius: 100px;
-  box-sizing: border-box;
+
+  /* box-sizing: border-box; */
   height: 64px;
   margin: 10px;
 }
@@ -86,32 +98,34 @@ div .answer-option {
 }
 
 .answer-option:hover {
-  border: 5px solid #582e83;
+  border: 2px solid #582e83;
 }
 
 .correct {
-  border: 3px solid rgb(6, 240, 15);
+  border: 2px solid rgb(6, 240, 15);
 }
 
 .wrong {
-  border: 3px solid red;
+  border: 2px solid red;
 }
 
 .game-buttons {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
   height: 100%;
-  margin-top: 30px;
+  justify-content: center;
   width: 50%;
 }
 
 .next-question {
   background: #582e83;
+  border: 1px solid #582e83;
   border-radius: 10px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   color: white;
+  font-size: 18px;
   height: 45px;
-  left: 661px;
-  margin-left: 20px;
-  margin-top: 30px;
-  top: 575px;
-  width: 58%;
+  width: 20%;
 }

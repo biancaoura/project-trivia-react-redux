@@ -1,15 +1,11 @@
 header {
-  background: #349a73;
+  background: #6c91c2;
   box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
-  color: aliceblue;
+  color: #ebebd3;
   display: flex;
   font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
   height: 113px;
   justify-content: space-between;
-  left: 0;
-  line-height: 24px;
   position: absolute;
   top: 0;
   width: 100%;
@@ -30,25 +26,14 @@ header div {
 .player-info {
   display: flex;
   gap: 10px;
-  justify-content: flex-start;
   margin-left: 70px;
 }
 
 .user-image {
-  border-radius: 18.137px;
-  height: 37px;
-  left: 696px;
-  top: 39px;
+  border-radius: 18px;
   width: 37px;
 }
 
-h4 {
-  height: 24px;
-  left: 746px;
-  top: 49px;
-  width: 144px;
-}
-
 .score {
-  font-weight: 700;
+  margin-left: 10px;
 }
