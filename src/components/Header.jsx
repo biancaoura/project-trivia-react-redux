@@ -21,14 +21,13 @@ class Header extends Component {
             <img
               src={ this.hashEmail(email) }
               alt="avatar"
-              data-testid="header-profile-picture"
               className="user-image"
             />
-            <h4 data-testid="header-player-name">{ name }</h4>
+            <h4>{ name }</h4>
           </div>
           <h4>
             Score:
-            <span className="score" data-testid="header-score">{ score }</span>
+            <span className="score">{ score }</span>
           </h4>
         </div>
       </header>

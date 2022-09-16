@@ -49,14 +49,6 @@ class Game extends Component {
     }
   };
 
-  setTestId = (answer, i) => {
-    const { reducerTrivia: { trivia: { results } } } = this.props;
-    const { index } = this.state;
-
-    const correctAnswer = results[index].correct_answer;
-    return answer === correctAnswer ? 'correct-answer' : `wrong-answer-${i}`;
-  };
-
   setTimer = () => {
     const ONE_SECOND = 1000;
     setInterval(() => {
@@ -156,33 +148,32 @@ class Game extends Component {
           <section className="question-section">
 
             <section className="category">
-              <p className="question-category" data-testid="question-category">
+              <p className="question-category">
                 {results[index].category}
               </p>
             </section>
 
-            <p className="question-text" data-testid="question-text">
+            <p className="question-text">
               { this.decodeEntity(results[index].question) }
             </p>
 
             <section className="rt-game-info">
-              <div data-testid="timer">
+              <div>
                 { milliseconds }
               </div>
 
-              <div data-testid="score">
+              <div>
                 { score }
               </div>
             </section>
           </section>
 
           <div className="game-buttons">
-            <div className="answers" data-testid="answer-options">
+            <div className="answers">
               { allAnswers
                 .map(
                   (answer, i) => (
                     <button
-                      data-testid={ this.setTestId(answer, i) }
                       key={ i }
                       className={ `${isSelected ? this.setColor(answer) : undefined}
                      answer-option` }
@@ -199,7 +190,6 @@ class Game extends Component {
               && (
                 <button
                   type="button"
-                  data-testid="btn-next"
                   onClick={ this.nextQuestion }
                   className="next-question"
                 >

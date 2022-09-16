@@ -26,15 +26,15 @@ class Feedback extends Component {
     return (
       <main>
         <Header />
-        <h4 data-testid="feedback-text">{ this.checkAnswer()}</h4>
+        <h4>{ this.checkAnswer()}</h4>
         <img src={ triviaLogo } alt="logo" className="trivia-logo-feedback" />
         <div className="match-info">
           <span>Score</span>
-          <h2 data-testid="feedback-total-score">
+          <h2>
             { score }
           </h2>
           <span>Correct answers</span>
-          <h2 data-testid="feedback-total-question">
+          <h2>
             { assertions }
           </h2>
         </div>
@@ -42,7 +42,6 @@ class Feedback extends Component {
           type="button"
           id="play-again"
           onClick={ (e) => this.handleClick(e) }
-          data-testid="btn-play-again"
           className="feedback-btn"
         >
           Play again
@@ -51,7 +50,6 @@ class Feedback extends Component {
           type="button"
           id="ranking"
           onClick={ (e) => this.handleClick(e) }
-          data-testid="btn-ranking"
           className="feedback-btn"
         >
           Ranking

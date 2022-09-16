@@ -34,11 +34,6 @@ class Login extends Component {
     }, () => this.enableButton());
   };
 
-  handleClick = () => {
-    const { history: { push } } = this.props;
-    push('/settings');
-  };
-
   login = async (event) => {
     event.preventDefault();
     const { name, email } = this.state;
@@ -72,7 +67,6 @@ class Login extends Component {
           <h2>Time to play</h2>
           <input
             type="text"
-            data-testid="input-player-name"
             className="inputs"
             onChange={ this.handleChange }
             name="name"
@@ -81,7 +75,6 @@ class Login extends Component {
           />
           <input
             type="email"
-            data-testid="input-gravatar-email"
             className="inputs"
             onChange={ this.handleChange }
             name="email"
@@ -90,19 +83,10 @@ class Login extends Component {
           />
           <button
             type="submit"
-            data-testid="btn-play"
             className={ isDisabled ? 'buttons disabled' : 'buttons' }
             disabled={ isDisabled }
           >
             Play
-          </button>
-          <button
-            type="button"
-            data-testid="btn-settings"
-            className="buttons unbelievable"
-            onClick={ this.handleClick }
-          >
-            Settings
           </button>
         </form>
       </main>

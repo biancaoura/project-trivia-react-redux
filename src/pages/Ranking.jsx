@@ -25,10 +25,10 @@ export default class Ranking extends Component {
     const { ranking } = this.state;
     return (
       <div className="ranking-main">
-        <h1 data-testid="ranking-title">Ranking</h1>
+        <h1>Ranking</h1>
         <div className="ranking-card">
           {
-            ranking.map((position, index) => (
+            ranking.map((position) => (
               <section className="player-ranking-info" key={ position.picture }>
                 <div>
                   <img
@@ -36,13 +36,12 @@ export default class Ranking extends Component {
                     src={ position.picture }
                     alt={ position.name }
                   />
-                  <h6 data-testid={ `player-name-${index}` }>{ position.name }</h6>
+                  <h6>{ position.name }</h6>
                 </div>
                 <div>
                   <span>Score:</span>
                   <h6
                     className="player-ranking-score"
-                    data-testid={ `player-score-${index}` }
                   >
                     { position.score }
                   </h6>
@@ -52,7 +51,6 @@ export default class Ranking extends Component {
           }
           <button
             type="button"
-            data-testid="btn-go-home"
             onClick={ this.handleClick }
             className="home-button"
           >
