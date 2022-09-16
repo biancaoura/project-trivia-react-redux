@@ -32,15 +32,7 @@ describe('Testa a página de login', () => {
       expect(inputEmail).toBeInTheDocument();
     });
 
-    test('4 - Testa o redirecionamento do botão Settings', () => {
-      const settingsButton = screen.getByRole('button', { name: /settings/i });
-      userEvent.click(settingsButton);
-
-      const { location: { pathname } } = renderHistory;
-      expect(pathname).toBe('/settings');
-    });
-
-    test('5 - Testa se o botão Play está desabilitado, e se o formulário for preenchido, ele é habilitado', () => {
+    test('4 - Testa se o botão Play está desabilitado, e se o formulário for preenchido, ele é habilitado', () => {
       const inputName = screen.getByPlaceholderText(/name/i);
       const inputEmail = screen.getByPlaceholderText(/email/i);
       const playBtn = screen.getByRole('button', { name: /play/i});
